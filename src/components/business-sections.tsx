@@ -142,7 +142,7 @@ export function FilingsSection() {
   const cur = groups[active] ?? groups[0]!;
   const label = (item: string) => t(filingEs[item] ?? item, item);
   return <section className="section filings-section" id="services"><div className="container-business">
-    <div className="text-center max-w-2xl mx-auto"><span className="section-label justify-center">{t('TRÁMITES A LA CARTA', 'FILINGS À LA CARTE')}</span><h2>{t('Complementa o gestiona tu negocio a la carta', 'Complete or manage your company à la carte')}</h2><p className="pricing-sub">{t('¡Somos el 911 de nuestros clientes! Solicita únicamente el documento, renovación o actualización que necesitas hoy, sin paquetes forzosos.', 'We are our clients’ 911! Request only the document, renewal, or update you need today, with no forced packages.')}</p></div>
+    <div className="text-center max-w-2xl mx-auto"><span className="section-label justify-center">{t('TRÁMITES A LA CARTA', 'FILINGS À LA CARTE')}</span><h2>{t('Elige solo lo que tu negocio necesita', 'Choose only what your business needs')}</h2><p className="pricing-sub">{t('¡Somos el 911 de nuestros clientes! Solicita únicamente el documento, renovación o actualización que necesitas hoy.', 'We are our clients’ 911! Request only the document, renewal, or update you need today.')}</p></div>
     <div className="filings-layout" data-reveal>
       <div className="filings-nav" role="tablist" aria-label={t('Categorías de trámites', 'Filing categories')}>
         {groups.map((group, index) => <button key={group.plan} type="button" role="tab" aria-selected={active === index} data-active={active === index} onClick={() => setActive(index)}>
@@ -179,15 +179,15 @@ export function PartnersSection() {
   const [open, setOpen] = useState<string | null>(null);
   const brands = [
     { name: 'Credit Experts', abbr: 'CE', logo: '/images/Logo-Credit-Experts.png', desc: t('Reparación y construcción de crédito personal.', 'Personal credit repair and building.') },
-    { name: 'Boost Credit', abbr: 'BC', logo: '/images/Logo-Boost-Credit.png', desc: t('Impulso acelerado de tu puntaje crediticio.', 'Accelerated boost for your credit score.') },
-    { name: 'Tax Research', abbr: 'TR', logo: '/images/Logo-Tax-Research.png', desc: t('Investigación y estrategia fiscal especializada.', 'Specialized tax research and strategy.') },
-    { name: 'Debt Solution', abbr: 'DS', logo: '/images/Logo-Debt-Solution.png', desc: t('Soluciones para manejar y reducir tus deudas.', 'Solutions to manage and reduce your debts.') },
+    { name: 'Boost Credit', abbr: 'BC', logo: '/images/Logo-Boost-Credit.png', desc: t('Asesoría para el impulso de tu score.', 'Guidance to boost your credit score.') },
+    { name: 'Tax Research', abbr: 'TR', logo: '/images/Logo-Tax-Research.png', desc: t('Especialistas enfocados en declarar tus impuestos correctamente.', 'Specialists focused on filing your taxes correctly.') },
+    { name: 'Debt Solution', abbr: 'DS', logo: '/images/Logo-Debt-Solution.png', desc: t('Soluciones para manejar deudas, reducir pagos y ahorrar.', 'Solutions to manage debts, reduce payments, and save.') },
     { name: 'Keybook', abbr: 'KB', logo: '/images/Logo-Keybook.png', desc: t('Contabilidad y libros contables al día.', 'Bookkeeping and accounting kept current.') },
-    { name: 'Creative', abbr: '', icon: Sparkles, desc: t('Marketing digital, redes sociales y ventas.', 'Digital marketing, social media, and sales.') },
+    { name: 'Creative', abbr: '', icon: Sparkles, desc: t('Branding, diseño web y marketing digital para vender más.', 'Branding, web design, and digital marketing to sell more.') },
   ];
   return <section className="section partners-section" id="partners"><div className="container-business partners-layout">
     <div className="partners-copy" data-reveal>
-      <span className="section-label">{t('ECOSISTEMA AMG', 'AMG ECOSYSTEM')}</span>
+      <span className="section-label">{t('RED DE SOCIOS ESTRATÉGICOS', 'STRATEGIC PARTNER NETWORK')}</span>
       <h2>{t('Nuestras Marcas Aliadas.', 'Our Partner Brands.')}</h2>
       <p className="pricing-sub">{t('Business forma parte de una red de soluciones integrales del grupo AMG, diseñada para acompañar cada etapa de tu vida financiera y empresarial.', 'Business is part of the AMG group’s network of comprehensive solutions, designed to support every stage of your financial and business life.')}</p>
     </div>
@@ -263,28 +263,28 @@ const REGISTRATION_FEE = 349;
 const money = (value: number) => `$${value.toFixed(2)}`;
 
 const filingEs: Record<string, string> = {
-  'Articles of Organization': 'Artículos de Organización',
+  'Articles of Organization': 'Artículo de Organización',
   'Articles of Incorporation': 'Artículos de Incorporación',
   'Initial Report': 'Reporte Inicial',
-  'EIN Number': 'Número EIN',
+  'EIN Number': 'EIN',
   'New Entity': 'Nueva Entidad',
   'Corporate Book': 'Libro Corporativo',
   'Operating Agreement': 'Acuerdo Operativo',
-  'Agent for Service of Process': 'Agente Registrado',
-  'Statement of Information': 'Declaración de Información',
-  "Seller's Permit Renewal": 'Renovación de Permiso de Ventas',
-  'Business License Tax Renewal': 'Renovación de Licencia Comercial',
+  'Agent for Service of Process': 'Registered Agent',
+  'Statement of Information': 'Statement of Information',
+  "Seller's Permit Renewal": "Renovación de Seller's Permit",
+  'Business License Tax Renewal': 'Renovación de Business License Tax',
   'Amendment (IRS)': 'Enmienda IRS',
   'Amendment (SOS)': 'Enmienda SOS',
-  'Fictitious Business Name': 'Nombre Comercial Ficticio',
-  'FBN Abandonment': 'Abandono de Nombre Comercial',
+  'Fictitious Business Name': 'Fictitious Business Name',
+  'FBN Abandonment': 'Abandono de FBN',
   'Dissolution Only': 'Disolución',
   'FINCEN BOI Report': 'Reporte BOI de FINCEN',
   'Conversion Corp - LLC': 'Conversión de Corp a LLC',
   'Conversion LLC - Corp': 'Conversión de LLC a Corp',
   'EIN Letter Cancellation': 'Cancelación de Carta EIN',
-  'Business License Tax': 'Impuesto de Licencia Comercial',
-  "Seller's Permit": 'Permiso de Ventas',
+  'Business License Tax': 'Business License Tax',
+  "Seller's Permit": "Seller's Permit",
 };
 
 export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: string; initialBusiness: string; initialItem?: string | undefined }) {
