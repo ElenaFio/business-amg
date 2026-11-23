@@ -82,7 +82,7 @@ export function RegisterSection() {
     { plan: 'LLC', tab: 'LLC',
       title: t('LLC: Ideal para pequeños y medianos negocios que buscan formalizar.', 'LLC: Ideal for small and mid-sized businesses looking to formalize.'),
       text: t('Una opción para establecer tu negocio, organizar sus operaciones y separar las finanzas de tu compañía de las personales.', 'An option to establish your business, organize its operations, and separate your company’s finances from your personal ones.'),
-      check: t('Ideal para limpieza, construcción, remodelación, salones de belleza, barberías, talleres de autos, negocios de comida y más.', 'Ideal for cleaning, construction, remodeling, beauty salons, barbershops, auto repair shops, food businesses, and more.'),
+      check: t('Ideal para servicios de limpieza, construcción, remodelación, salones de belleza, barberías, talleres de autos, negocios de comida y más.', 'Ideal for cleaning services, construction, remodeling, beauty salons, barbershops, auto repair shops, food businesses, and more.'),
       cta: t('Registrar LLC', 'Register LLC'),
       facts: [[t('Dueños', 'Owners'), t('Dueños (1 o más)', 'Owners (1 or more)')], [t('Junta directiva', 'Board of directors'), t('Requerida (de uno o varios miembros)', 'Required (one or more members)')], [t('Emite acciones', 'Issues shares'), t('No', 'No')]] },
     { plan: 'INC', tab: 'INC',
