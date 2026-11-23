@@ -105,7 +105,7 @@ export function RegisterSection() {
   return <section className="section register-section" id="register"><div className="container-business">
     <div className="register-head" data-reveal>
       <div><span className="section-label">{t('REGISTRO CORPORATIVO', 'CORPORATE REGISTRATION')}</span><h2>{t('Registra tu compañía en EE. UU.', 'Register your company in the U.S.')}</h2></div>
-      <p className="pricing-sub">{t('Elige la estructura corporativa que mejor se adapta a tu modelo de negocio en cualquiera de los 50 estados.', 'Choose the corporate structure that best fits your business model in any of the 50 states.')}</p>
+      <p className="pricing-sub">{t('Elige la estructura corporativa que mejor se adapta a tu modelo de negocio en cualquiera de los 50 Estados.', 'Choose the corporate structure that best fits your business model in any of the 50 states.')}</p>
     </div>
     <div className="register-shell" data-reveal>
       <div className="register-tabs" role="tablist">{[0, 1, 2].map(i => <button key={i} type="button" role="tab" aria-selected={active === i} data-active={active === i} onClick={() => setActive(i)}><span className="register-num">0{i + 1}</span><strong>{entities[i]?.tab}</strong></button>)}</div>
@@ -227,7 +227,7 @@ export function TestimonialsSection() {
       text: 'Mi experiencia durante años que estado realizando mis declaraciones de impuestos con el señor César Moreno ha sido realmente satisfactoria en todos los sentidos puesto que el señor es muy profesional, paciente para dar explicaciones de cualquier duda que surge durante elaboración de mis declaraciones de impuestos…' },
   ];
   return <section className="section testimonials-section" id="testimonials"><div className="container-business">
-    <div className="section-intro" data-reveal><div><span className="section-label">{t('TESTIMONIOS', 'TESTIMONIALS')}</span><h2>{t('Dueños de negocios latinos que ya dieron el paso con Business', 'Latino business owners who already took the step with Business')}</h2><p className="pricing-sub">{t('Historias reales de negocios que crecen en EE. UU.', 'Real stories of businesses growing in the U.S.')}</p></div></div>
+    <div className="section-intro" data-reveal><div><span className="section-label">{t('TESTIMONIOS', 'TESTIMONIALS')}</span><h2>{t('Latinos que confiaron su compañía a Business', 'Latinos who trusted their company to Business')}</h2><p className="pricing-sub">{t('Historias reales de negocios que crecen en EE. UU.', 'Real stories of businesses growing in the U.S.')}</p></div></div>
     <div className="review-grid" data-reveal-stagger>{reviews.map(r => <a key={r.name} className="review-card" href={r.url} target="_blank" rel="noopener noreferrer">
       <div className="review-head"><Quote className="quote-mark" /><span className="review-source"><Facebook size={15} />Facebook</span></div>
       <p>{r.text}</p>
@@ -344,7 +344,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <div className="language-switch">{(['ES', 'EN'] as const).map(l => <Button key={l} type="button" variant="language" data-active={language === l} aria-pressed={language === l} onClick={() => setLanguage(l)}>{l}</Button>)}</div>
       </div>
       <h1 className="onboarding-title">{step === 1 ? t('Arma tu solicitud', 'Build your request') : step === 2 ? t('Finaliza tu solicitud', 'Finish your request') : step === 3 ? t('Pago seguro', 'Secure payment') : t('Solicitud confirmada', 'Request confirmed')}</h1>
-      <p className="onboarding-sub">{step === 1 ? t('Elige tu entidad, tu estado y los trámites que necesitas. Sin paquetes forzosos.', 'Choose your entity, your state, and the filings you need. No forced packages.') : step === 2 ? t('Revisa tu solicitud y completa tus datos para continuar al pago.', 'Review your request and complete your details to continue to payment.') : step === 3 ? t('Completa los datos de tu tarjeta para finalizar la solicitud.', 'Complete your card details to finish the request.') : t('Tu solicitud quedó registrada con los datos que enviaste.', 'Your request was registered with the details you submitted.')}</p>
+      <p className="onboarding-sub">{step === 1 ? t('Elige tu entidad, tu Estado y los trámites que necesitas. Sin paquetes forzosos.', 'Choose your entity, your state, and the filings you need. No forced packages.') : step === 2 ? t('Revisa tu solicitud y completa tus datos para continuar al pago.', 'Review your request and complete your details to continue to payment.') : step === 3 ? t('Completa los datos de tu tarjeta para finalizar la solicitud.', 'Complete your card details to finish the request.') : t('Tu solicitud quedó registrada con los datos que enviaste.', 'Your request was registered with the details you submitted.')}</p>
       {step === 1 && <>
       <fieldset className="portal-block"><legend>{t('¿Qué necesitas hacer?', 'What do you need to do?')}</legend>
         <div className="segmented" role="radiogroup">
@@ -356,7 +356,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <div className="radio-cards">{entities.map(e => <button key={e.plan} type="button" role="radio" aria-checked={entity === e.plan} data-active={entity === e.plan} onClick={() => setEntity(e.plan)}><Building2 size={18} /><span><strong>{e.title}</strong><small>{e.text}</small></span><span className="entity-option-price">{money(REGISTRATION_FEE)}</span></button>)}</div>
       </fieldset>}
       <fieldset className="portal-block"><legend>{t('Estado y negocio', 'State and business')}</legend>
-        <label>{t('Estado de registro', 'Registration state')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
+        <label>{t('Estado de registro', 'Registration state')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
         <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
       </fieldset>
       {mode === 'register' ? <div className="filing-section">
@@ -477,7 +477,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       </dl>
       <p className="portal-note">{t('Tarifa base de servicio desde $349. Las tasas estatales aplican por separado según el Estado y tipo de compañía.', 'Base service fee starting at $349. State filing fees apply separately depending on the state and entity type.')}</p>
       {step <= 2 && <Button variant="brand" type={step === 1 ? 'button' : 'submit'} className="h-12 w-full" onClick={step === 1 ? () => {
-        if (!canAdvance) { setError(t('Completa el estado y el nombre del negocio; si gestionas tu negocio, elige al menos un trámite.', 'Complete the state and business name; if managing your company, select at least one filing.')); return; }
+        if (!canAdvance) { setError(t('Completa el Estado y el nombre del negocio; si gestionas tu negocio, elige al menos un trámite.', 'Complete the state and business name; if managing your company, select at least one filing.')); return; }
         setError(''); setStep(2); window.scrollTo({ top: 0, behavior: 'smooth' });
       } : undefined}>{step === 1 ? t('Continuar con mis datos', 'Continue with my details') : t('Ir al pago', 'Go to payment')}<ArrowRight /></Button>}
       {step <= 2 && <p className="portal-note">{step === 1 ? t('Completa tus datos en el siguiente paso antes de ir al pago.', 'Complete your details in the next step before going to payment.') : t('Avanzarás a la pasarela de pago segura.', 'You will move on to the secure payment gateway.')}</p>}
