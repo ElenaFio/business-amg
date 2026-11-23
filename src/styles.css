@@ -262,14 +262,17 @@
 .pricing-sub { font-size: 16px; color: var(--muted-foreground); margin-top: 12px; line-height: 1.7; }
 .section.testimonials-section { padding-block: 80px; }
 .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 36px; }
-.review-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px; transition: background .2s ease, border-color .2s ease, box-shadow .2s ease; }
-.review-card:hover { background: #FAF8F3; border-color: var(--primary); box-shadow: 0 16px 34px -26px rgba(0,0,0,.4); }
+.review-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px; color: inherit; cursor: pointer; transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.review-card:hover { background: #FAF8F3; border-color: var(--primary); box-shadow: 0 18px 38px -26px rgba(0,0,0,.45); transform: translateY(-3px); }
+.review-source { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--muted-foreground); }
+.review-link { display: inline-flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 4px; font-size: 12px; font-weight: 700; color: var(--primary); }
+.review-more { display: flex; justify-content: center; margin-top: 28px; }
+.review-more a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--primary); text-decoration: underline; text-underline-offset: 4px; }
+.review-more a:hover { color: var(--foreground); }
 .review-card > p { font-size: 14px; line-height: 1.65; flex: 1; }
 .review-head { display: flex; justify-content: space-between; align-items: center; }
 .quote-mark { color: var(--secondary); width: 36px; height: 36px; }
-.stars { display: flex; gap: 2px; color: var(--primary); } .stars svg { fill: currentColor; }
 .review-author { display: flex; gap: 12px; align-items: center; }
-.review-author img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
 .review-author strong { display: block; font-size: 15px; }
 .review-author small { font-size: 11px; letter-spacing: .04em; color: var(--muted-foreground); }
 @media (max-width: 1024px) { .review-grid { grid-template-columns: 1fr 1fr; } }

@@ -1,14 +1,11 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { Link } from '@tanstack/react-router';
-import { ArrowDown, ArrowLeft, ArrowRight, Building2, CalendarCheck, Check, FileText, Globe2, HeartHandshake, LockKeyhole, Quote, ShieldCheck, SlidersHorizontal, Sparkles, Star, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, Building2, CalendarCheck, Check, Facebook, FileText, Globe2, HeartHandshake, LockKeyhole, Quote, ShieldCheck, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/lib/language';
 import { whatsappUrl } from '@/lib/contact';
 import { BrandLogo } from '@/components/brand-logo';
-import roberto from '@/assets/avatar-roberto.jpg';
-import patricia from '@/assets/avatar-patricia.jpg';
-import hector from '@/assets/avatar-hector.jpg';
 
 export function TrustMarquee() {
   const { t } = useLanguage();
@@ -210,20 +207,28 @@ export function PartnersSection() {
 export function TestimonialsSection() {
   const { t } = useLanguage();
   const reviews = [
-    { name: 'Roberto Salazar', company: 'SALAZAR REMODELING LLC • CALIFORNIA', photo: roberto, text: t('Business hizo que abrir mi negocio en California fuera súper fácil y en mi idioma. Me ayudaron con todo el papeleo, el Statement of Information y hasta con el Operating Agreement. Los recomiendo a ojos cerrados.', 'Business made opening my company in California super easy, all in my language. They helped with all the paperwork, the Statement of Information, and even the Operating Agreement. I recommend them without a second thought.') },
-    { name: 'Patricia Gómez', company: 'SHINE CLEAN PRO LLC • FLORIDA', photo: patricia, text: t('Yo ya tenía mi negocio pero todo estaba desordenado. Con Business hice mi Statement of Information y la renovación de mi licencia sin complicaciones, y me explicaron cada paso.', 'I already had my business, but everything was disorganized. With Business I filed my Statement of Information and renewed my license without any hassle, and they explained every step.') },
-    { name: 'Héctor Ramírez', company: 'RAMIREZ AUTO TECH LLC • NEW YORK', photo: hector, text: t('Lo que más valoro es la paciencia y claridad. Me explicaron paso a paso cómo sacar mi EIN con ITIN y hoy tengo mi taller mecánico totalmente en regla con el Estado.', 'What I value most is their patience and clarity. They explained step by step how to get my EIN with an ITIN, and today my auto shop is fully compliant with the state.') },
-    { name: 'Lucía Fernández', company: 'LUZ BEAUTY STUDIO LLC • ARIZONA', photo: undefined as string | undefined, text: t('Pensé que sin SSN no podría tener mi salón en regla. Me guiaron con mi ITIN, registraron mi LLC y hoy facturo con tranquilidad.', 'I thought I couldn’t make my salon compliant without an SSN. They guided me with my ITIN, registered my LLC, and today I invoice with peace of mind.') },
-    { name: 'Miguel Torres', company: 'TORRES LANDSCAPING LLC • GEORGIA', photo: undefined as string | undefined, text: t('Mis trámites estaban atrasados. Con Business hice el Amendment de mi compañía y el FINCEN BOI Report en pocos días, y hoy todo está al día con el Estado.', 'My filings were behind. With Business I completed my company’s Amendment and the FINCEN BOI Report in a few days, and today everything is up to date with the state.') },
-    { name: 'Andrés Castillo', company: 'CASTILLO FOOD TRUCK LLC • ILLINOIS', photo: undefined as string | undefined, text: t('Con Business renové mi Seller’s Permit y mi licencia sin cerrar el negocio ni un día. Siempre me responden en mi idioma y rápido.', 'With Business I renewed my Seller’s Permit and my license without closing the business for a single day. They always answer quickly, in my language.') },
+    { name: 'Elizabeth Romero', initials: 'ER', subtitle: t('Cliente verificada • Mayo 2025', 'Verified client • May 2025'), url: 'https://www.facebook.com/elizabeth.romero.904/posts/pfbid02RDYzgnYTUWQLEiyCKwJsS6bnjmanFaVPxRCXd18JCTjKAxoD34k2ViGc4ZWCCDmnl',
+      text: 'Completamente satisfecha con la ayuda recibida del personal de AMG. Muy profesionales y siempre disponibles para cualquier duda o pregunta, especialmente con la señorita Luciana.' },
+    { name: 'Chilango Garcia', initials: 'CG', subtitle: t('Dueño de negocio • Abril 2025', 'Business owner • April 2025'), url: 'https://www.facebook.com/permalink.php?story_fbid=pfbid02XRHq5cHBN4EdNQt87gh9kpK8oK1EYoVNVD1zk4jtVTsncPT5MV1taPBGJiaJNh5Dl&id=61575071181807',
+      text: 'Quiero agradecer a la señorita Luciana por su profesionalismo y su ayuda, muy buena manera de aclarar las dudas y sobre todo su paciencia para explicar paso a paso. De antemano muchas gracias.' },
+    { name: 'René Ordóñez', initials: 'RO', subtitle: t('Apertura de negocio • Febrero 2025', 'Business opening • February 2025'), url: 'https://www.facebook.com/rene.ord/posts/pfbid0NTLoahFEzWFh3kp6scYYEWQAz5BKFA5A1T8rWJjaLuDX1Gei3XHMwtZMLiH2gfk2l',
+      text: 'Muy satisfecho con el trabajo de Business y especialmente con la Srita. Luciana Gayoso, quien me ha ayudado en todo momento con la apertura de mi propio negocio y resolviendo a la brevedad toda consulta que he tenido. Súper recomiendo los servicios que prestan.' },
+    { name: 'José Rangel', initials: 'JR', subtitle: t('Cliente de Business • Noviembre 2024', 'Business client • November 2024'), url: 'https://www.facebook.com/JR29paraservirles/posts/pfbid0PELWjRqVKWsmKP8gehcnb5xAmeb2D4dvaPWoMQ5yGTwzERLacngkQ1TEnD1JY7Dkl',
+      text: 'Deseo manifestar mi más profundo agradecimiento por el extraordinario servicio que Business Inc. ha proporcionado desde el comienzo de nuestra cooperación, he sido tratado con amabilidad y profesionalidad, evidenciando un compromiso inalterable con la excelencia y la satisfacción del cliente.' },
+    { name: 'Daniel Tenorio', initials: 'DT', subtitle: t('Compañía de limpieza • Noviembre 2024', 'Cleaning company • November 2024'), url: 'https://www.facebook.com/daniel.tenorio.566/posts/pfbid0eJLyt9LjDfDnt3rhx9a42t5VHta2BqqRGpH5otKHF3X327q4FYkNWUt638MwKFQhl',
+      text: 'Yo abrí una compañía de limpieza, muy satisfecho con los servicios, he tenido mucho apoyo. La Srta. Luciana me ha brindado apoyo e información, el tiempo de respuesta muy rápido, gracias.' },
+    { name: 'Aurelio Salazar Beltran', initials: 'AS', subtitle: t('Declaraciones de impuestos • Septiembre 2024', 'Tax filings • September 2024'), url: 'https://www.facebook.com/aurelio.salazarbeltran/posts/pfbid02mGrmkqctJyxvLixLaxqg8gNpDj1mQVpLwnF5UN6W4a9tF4GmUJw2r3EhENeUdb9Nl',
+      text: 'Mi experiencia durante años que estado realizando mis declaraciones de impuestos con el señor César Moreno ha sido realmente satisfactoria en todos los sentidos puesto que el señor es muy profesional, paciente para dar explicaciones de cualquier duda que surge durante elaboración de mis declaraciones de impuestos…' },
   ];
   return <section className="section testimonials-section" id="testimonials"><div className="container-business">
     <div className="section-intro" data-reveal><div><span className="section-label">{t('TESTIMONIOS', 'TESTIMONIALS')}</span><h2>{t('Dueños de negocios latinos que ya dieron el paso con Business', 'Latino business owners who already took the step with Business')}</h2><p className="pricing-sub">{t('Historias reales de negocios que crecen en EE. UU.', 'Real stories of businesses growing in the U.S.')}</p></div></div>
-    <div className="review-grid" data-reveal-stagger>{reviews.map(r => <article key={r.name} className="review-card">
-      <div className="review-head"><Quote className="quote-mark" /><span className="stars" aria-label={t('5 estrellas', '5 stars')}>{Array.from({ length: 5 }, (_, i) => <Star key={i} size={16} />)}</span></div>
+    <div className="review-grid" data-reveal-stagger>{reviews.map(r => <a key={r.name} className="review-card" href={r.url} target="_blank" rel="noopener noreferrer">
+      <div className="review-head"><Quote className="quote-mark" /><span className="review-source"><Facebook size={15} />Facebook</span></div>
       <p>{r.text}</p>
-      <div className="review-author">{r.photo ? <img src={r.photo} alt={r.name} width={48} height={48} loading="lazy" /> : <span className="initials-avatar" aria-hidden="true">{r.name.split(' ').map(w => w[0]).join('')}</span>}<div><strong>{r.name}</strong><small>{r.company}</small></div></div>
-    </article>)}</div>
+      <div className="review-author"><span className="initials-avatar" aria-hidden="true">{r.initials}</span><div><strong>{r.name}</strong><small>{r.subtitle}</small></div></div>
+      <span className="review-link">{t('Ver reseña en Facebook', 'View review on Facebook')}<span aria-hidden="true">↗</span></span>
+    </a>)}</div>
+    <div className="review-more"><a href="https://www.facebook.com/business.usa.ca/reviews" target="_blank" rel="noopener noreferrer">{t('Ver todas las opiniones en Facebook', 'See all reviews on Facebook')}<span aria-hidden="true">↗</span></a></div>
   </div></section>;
 }
 
