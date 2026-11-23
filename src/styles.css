@@ -348,7 +348,8 @@
 }
 
 /* Testimonials: fixed video card + rotating track */
-.initials-avatar { width: 48px; height: 48px; border-radius: 99px; display: grid; place-items: center; background: var(--secondary); color: var(--secondary-foreground); font-weight: 700; font-size: 14px; }
+.initials-avatar { width: 48px; height: 48px; border-radius: 99px; display: grid; place-items: center; background: var(--secondary); color: var(--secondary-foreground); font-weight: 700; font-size: 14px; position: relative; overflow: hidden; flex: none; }
+.initials-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 /* Final CTA banner */
 .final-cta-wrap { padding-block: 80px; }
 .cta-banner { display: grid; grid-template-columns: 7fr 5fr; align-items: center; gap: 24px; background: var(--secondary); border-radius: 16px; overflow: hidden; }

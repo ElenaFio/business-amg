@@ -6,6 +6,12 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/lib/language';
 import { whatsappUrl } from '@/lib/contact';
 import { BrandLogo } from '@/components/brand-logo';
+import elizabeth from '@/assets/avatar-elizabeth.jpg';
+import chilango from '@/assets/avatar-chilango.jpg';
+import rene from '@/assets/avatar-rene.jpg';
+import jose from '@/assets/avatar-jose.jpg';
+import daniel from '@/assets/avatar-daniel.jpg';
+import aurelio from '@/assets/avatar-aurelio.jpg';
 
 export function TrustMarquee() {
   const { t } = useLanguage();
@@ -207,17 +213,17 @@ export function PartnersSection() {
 export function TestimonialsSection() {
   const { t } = useLanguage();
   const reviews = [
-    { name: 'Elizabeth Romero', initials: 'ER', subtitle: t('Cliente verificada • Mayo 2025', 'Verified client • May 2025'), url: 'https://www.facebook.com/elizabeth.romero.904/posts/pfbid02RDYzgnYTUWQLEiyCKwJsS6bnjmanFaVPxRCXd18JCTjKAxoD34k2ViGc4ZWCCDmnl',
+    { name: 'Elizabeth Romero', initials: 'ER', photo: elizabeth, subtitle: t('Cliente verificada • Mayo 2025', 'Verified client • May 2025'), url: 'https://www.facebook.com/elizabeth.romero.904/posts/pfbid02RDYzgnYTUWQLEiyCKwJsS6bnjmanFaVPxRCXd18JCTjKAxoD34k2ViGc4ZWCCDmnl',
       text: 'Completamente satisfecha con la ayuda recibida del personal de AMG. Muy profesionales y siempre disponibles para cualquier duda o pregunta, especialmente con la señorita Luciana.' },
-    { name: 'Chilango Garcia', initials: 'CG', subtitle: t('Dueño de negocio • Abril 2025', 'Business owner • April 2025'), url: 'https://www.facebook.com/permalink.php?story_fbid=pfbid02XRHq5cHBN4EdNQt87gh9kpK8oK1EYoVNVD1zk4jtVTsncPT5MV1taPBGJiaJNh5Dl&id=61575071181807',
+    { name: 'Chilango Garcia', initials: 'CG', photo: chilango, subtitle: t('Dueño de negocio • Abril 2025', 'Business owner • April 2025'), url: 'https://www.facebook.com/permalink.php?story_fbid=pfbid02XRHq5cHBN4EdNQt87gh9kpK8oK1EYoVNVD1zk4jtVTsncPT5MV1taPBGJiaJNh5Dl&id=61575071181807',
       text: 'Quiero agradecer a la señorita Luciana por su profesionalismo y su ayuda, muy buena manera de aclarar las dudas y sobre todo su paciencia para explicar paso a paso. De antemano muchas gracias.' },
-    { name: 'René Ordóñez', initials: 'RO', subtitle: t('Apertura de negocio • Febrero 2025', 'Business opening • February 2025'), url: 'https://www.facebook.com/rene.ord/posts/pfbid0NTLoahFEzWFh3kp6scYYEWQAz5BKFA5A1T8rWJjaLuDX1Gei3XHMwtZMLiH2gfk2l',
+    { name: 'René Ordóñez', initials: 'RO', photo: rene, subtitle: t('Apertura de negocio • Febrero 2025', 'Business opening • February 2025'), url: 'https://www.facebook.com/rene.ord/posts/pfbid0NTLoahFEzWFh3kp6scYYEWQAz5BKFA5A1T8rWJjaLuDX1Gei3XHMwtZMLiH2gfk2l',
       text: 'Muy satisfecho con el trabajo de Business y especialmente con la Srita. Luciana Gayoso, quien me ha ayudado en todo momento con la apertura de mi propio negocio y resolviendo a la brevedad toda consulta que he tenido. Súper recomiendo los servicios que prestan.' },
-    { name: 'José Rangel', initials: 'JR', subtitle: t('Cliente de Business • Noviembre 2024', 'Business client • November 2024'), url: 'https://www.facebook.com/JR29paraservirles/posts/pfbid0PELWjRqVKWsmKP8gehcnb5xAmeb2D4dvaPWoMQ5yGTwzERLacngkQ1TEnD1JY7Dkl',
+    { name: 'José Rangel', initials: 'JR', photo: jose, subtitle: t('Cliente de Business • Noviembre 2024', 'Business client • November 2024'), url: 'https://www.facebook.com/JR29paraservirles/posts/pfbid0PELWjRqVKWsmKP8gehcnb5xAmeb2D4dvaPWoMQ5yGTwzERLacngkQ1TEnD1JY7Dkl',
       text: 'Deseo manifestar mi más profundo agradecimiento por el extraordinario servicio que Business Inc. ha proporcionado desde el comienzo de nuestra cooperación, he sido tratado con amabilidad y profesionalidad, evidenciando un compromiso inalterable con la excelencia y la satisfacción del cliente.' },
-    { name: 'Daniel Tenorio', initials: 'DT', subtitle: t('Compañía de limpieza • Noviembre 2024', 'Cleaning company • November 2024'), url: 'https://www.facebook.com/daniel.tenorio.566/posts/pfbid0eJLyt9LjDfDnt3rhx9a42t5VHta2BqqRGpH5otKHF3X327q4FYkNWUt638MwKFQhl',
+    { name: 'Daniel Tenorio', initials: 'DT', photo: daniel, subtitle: t('Compañía de limpieza • Noviembre 2024', 'Cleaning company • November 2024'), url: 'https://www.facebook.com/daniel.tenorio.566/posts/pfbid0eJLyt9LjDfDnt3rhx9a42t5VHta2BqqRGpH5otKHF3X327q4FYkNWUt638MwKFQhl',
       text: 'Yo abrí una compañía de limpieza, muy satisfecho con los servicios, he tenido mucho apoyo. La Srta. Luciana me ha brindado apoyo e información, el tiempo de respuesta muy rápido, gracias.' },
-    { name: 'Aurelio Salazar Beltran', initials: 'AS', subtitle: t('Declaraciones de impuestos • Septiembre 2024', 'Tax filings • September 2024'), url: 'https://www.facebook.com/aurelio.salazarbeltran/posts/pfbid02mGrmkqctJyxvLixLaxqg8gNpDj1mQVpLwnF5UN6W4a9tF4GmUJw2r3EhENeUdb9Nl',
+    { name: 'Aurelio Salazar Beltran', initials: 'AS', photo: aurelio, subtitle: t('Declaraciones de impuestos • Septiembre 2024', 'Tax filings • September 2024'), url: 'https://www.facebook.com/aurelio.salazarbeltran/posts/pfbid02mGrmkqctJyxvLixLaxqg8gNpDj1mQVpLwnF5UN6W4a9tF4GmUJw2r3EhENeUdb9Nl',
       text: 'Mi experiencia durante años que estado realizando mis declaraciones de impuestos con el señor César Moreno ha sido realmente satisfactoria en todos los sentidos puesto que el señor es muy profesional, paciente para dar explicaciones de cualquier duda que surge durante elaboración de mis declaraciones de impuestos…' },
   ];
   return <section className="section testimonials-section" id="testimonials"><div className="container-business">
@@ -225,7 +231,7 @@ export function TestimonialsSection() {
     <div className="review-grid" data-reveal-stagger>{reviews.map(r => <a key={r.name} className="review-card" href={r.url} target="_blank" rel="noopener noreferrer">
       <div className="review-head"><Quote className="quote-mark" /><span className="review-source"><Facebook size={15} />Facebook</span></div>
       <p>{r.text}</p>
-      <div className="review-author"><span className="initials-avatar" aria-hidden="true">{r.initials}</span><div><strong>{r.name}</strong><small>{r.subtitle}</small></div></div>
+      <div className="review-author"><span className="initials-avatar" aria-hidden="true">{r.photo && <img src={r.photo} alt="" width={48} height={48} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />}{r.initials}</span><div><strong>{r.name}</strong><small>{r.subtitle}</small></div></div>
       <span className="review-link">{t('Ver reseña en Facebook', 'View review on Facebook')}<span aria-hidden="true">↗</span></span>
     </a>)}</div>
     <div className="review-more"><a href="https://www.facebook.com/business.usa.ca/reviews" target="_blank" rel="noopener noreferrer">{t('Ver todas las opiniones en Facebook', 'See all reviews on Facebook')}<span aria-hidden="true">↗</span></a></div>
