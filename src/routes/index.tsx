@@ -10,6 +10,9 @@ import { officePhone, officePhoneHref, contactEmail } from '@/lib/contact';
 import { BrandLogo } from '@/components/brand-logo';
 import owner from '@/assets/business-owner.jpg';
 import ctaPhoto from '@/assets/cta-entrepreneur.jpg';
+import avatarRoberto from '@/assets/avatar-roberto.jpg';
+import avatarPatricia from '@/assets/avatar-patricia.jpg';
+import avatarHector from '@/assets/avatar-hector.jpg';
 
 export const Route = createFileRoute('/')({
  head: () => ({ meta: [
@@ -39,7 +42,7 @@ function Landing() {
 
  const navigate = useNavigate();
  const start = (selected?: string) => { navigate({ to: '/onboarding', search: { plan: typeof selected === 'string' ? selected : 'Register', business: business || undefined } }); };
- const nav = [ ['register', t('Registro', 'Registration')], ['services', t('Trámites', 'Filings')], ['testimonials', t('Testimonios', 'Testimonials')], ['faq', 'FAQ'] ];
+ const nav = [ ['register', t('Registro', 'Registration')], ['services', t('Trámites', 'Filings')], ['testimonials', t('Testimonios', 'Testimonials')], ['faq', t('Preguntas frecuentes', 'FAQ')] ];
  return <>
  <div className="announcement"><Gift size={13} className="inline mr-2" /><strong>{t('OFERTA ESPECIAL:', 'SPECIAL OFFER:')}</strong> {t('Registra tu negocio hoy y recibe ', 'Register your business today and get ')}<strong>{t('1 año de asesoría 100% gratuita', '1 year of 100% free guidance')}</strong><span className="announcement-end"> {t('para crecer y tener éxito.', 'to grow and succeed.')}</span><ArrowRight size={12} className="inline ml-2" /></div>
  <header className="site-header"><div className="container-business nav-inner">
@@ -50,15 +53,19 @@ function Landing() {
  <main data-ready={ready}>
  <section className="hero container-business">
  <motion.div initial={false} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6 }}>
- <span className="section-label">{t('PARA EMPRENDEDORES LATINOS EN EE. UU.', 'FOR LATINO ENTREPRENEURS IN THE U.S.')}</span>
+ <span className="section-label">{t('PARA DUEÑOS DE NEGOCIOS LATINOS EN EE. UU.', 'FOR LATINO BUSINESS OWNERS IN THE U.S.')}</span>
  <h1>{t('Enfócate en tu negocio, nosotros nos ocupamos de ', 'Focus on your business. We take care of ')}<span className="highlight">{t('todo el papeleo.', 'all the paperwork.')}</span></h1>
  <p className="hero-description">{t('Registro de LLC, INC y Non-Profit y trámites corporativos ante el Estado y el IRS. Todo en el idioma que elijas.', 'LLC, INC, and Non-Profit registration and corporate filings with the state and the IRS. All in the language you choose.')}</p>
  <form className="quick-form" onSubmit={event => { event.preventDefault(); start(); }}><input aria-label={t('Nombre de tu negocio', 'Your business name')} placeholder={t('¿Cómo se llamará tu negocio?', 'What will you name your business?')} value={business} onChange={event => setBusiness(event.target.value)} /><Button variant="sunshine" type="submit">{t('Registrar mi Negocio', 'Register my Business')}<ArrowRight /></Button></form>
- <div className="microcopy"><span><Check />{t('Proceso 100% en línea', '100% online process')}</span><span><Check />{t('Asesoría 1-a-1 en tu idioma', 'One-on-one guidance in your language')}</span></div>
- <div className="hero-reassurance"><div className="avatar-stack" aria-hidden="true"><span>JR</span><span>MC</span><span>AL</span><span>+</span></div><p><strong>{t('Grandes sueños. Negocios reales.', 'Big dreams. Real businesses.')}</strong>{t('Un aliado que entiende tu camino.', 'A partner who understands your journey.')}</p></div>
+ <div className="hero-reassurance"><div className="avatar-stack">
+   <span className="avatar-chip" data-label="Roberto Salazar · Salazar Remodeling LLC"><img src={avatarRoberto} alt="Roberto Salazar, Salazar Remodeling LLC" width={32} height={32} loading="lazy" /></span>
+   <span className="avatar-chip" data-label="Patricia Gómez · Shine Clean Pro LLC"><img src={avatarPatricia} alt="Patricia Gómez, Shine Clean Pro LLC" width={32} height={32} loading="lazy" /></span>
+   <span className="avatar-chip" data-label="Héctor Ramírez · Ramirez Auto Tech LLC"><img src={avatarHector} alt="Héctor Ramírez, Ramirez Auto Tech LLC" width={32} height={32} loading="lazy" /></span>
+   <span className="avatar-chip avatar-more" aria-hidden="true">+</span>
+ </div><p><strong>{t('Grandes sueños. Negocios reales.', 'Big dreams. Real businesses.')}</strong>{t('Un aliado que entiende tu camino.', 'A partner who understands your journey.')}</p></div>
  </motion.div>
  <motion.div className="hero-visual" initial={false} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .15 }}>
- <img className="owner-photo" src={owner} alt={t('Representación de un emprendedor latino con una tablet en su restaurante', 'Illustration of a Latino entrepreneur holding a tablet in his restaurant')} width={1024} height={1280} fetchPriority="high" />
+ <img className="owner-photo" src={owner} alt={t('Representación de un dueño de negocio latino con una tablet en su restaurante', 'Illustration of a Latino business owner holding a tablet in his restaurant')} width={1024} height={1280} fetchPriority="high" />
  <div className="photo-caption">{t('Tu próximo capítulo empieza aquí.', 'Your next chapter starts here.')}</div>
  <motion.div className="floating-card approved-card" whileHover={{ y: -4 }} animate={reduced ? {} : { y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 5 }}><div className="icon-tile"><FileCheck2 size={23} /></div><div><strong>{t('¡Tu LLC está aprobada!', 'Your LLC is approved!')}</strong><p>{t('Un gran paso para tu negocio', 'A big step for your business')}</p><span className="small-status"><Check size={11} />{t('Registro completado', 'Registration complete')}</span></div></motion.div>
  <motion.div className="floating-card filings-card" whileHover={{ y: -4 }} animate={reduced ? {} : { y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 6 }}><div className="icon-tile"><ShieldCheck size={21} /></div><div><strong>{t('Trámites al día', 'Filings up to date')}</strong><p>{t('Estado e IRS bajo control', 'State and IRS in order')}</p></div></motion.div>
@@ -78,7 +85,7 @@ function Landing() {
  [t('¿Cuánto tardan los trámites según el estado?','How long do filings take depending on the state?'),t('Cada estado y cada trámite tienen sus propios tiempos de aprobación, y algunos estados ofrecen procesamiento acelerado. Antes de empezar te damos un estimado según el estado y el trámite elegido.','Each state and each filing has its own approval times, and some states offer expedited processing. Before you start we give you an estimate based on the state and the filing you choose.')],
  [t('¿Qué datos me piden en la solicitud?','What details does the request ask for?'),t('Tus datos de contacto, la dirección del negocio y la de correspondencia si es distinta, el nombre del titular o miembro principal y el giro del negocio. Todo se completa en el mismo flujo, antes del pago.','Your contact details, the business address and a mailing address if different, the owner or main member name, and the business activity. Everything is completed in the same flow, before payment.')],
  ].map(([q,a]) => <details key={q}><summary>{q}<Plus /></summary><p>{a}</p></details>)}</div></div></section>
-  <section className="final-cta-wrap container-business"><div className="cta-banner" data-reveal><div className="cta-copy"><div className="section-label">{t('EL SIGUIENTE PASO ES TUYO','YOUR NEXT STEP STARTS HERE')}</div><h2>{t('Alguien allá afuera necesita tu negocio.','Someone out there needs your business.')}</h2><p>{t('Empieza bien desde el principio, con expertos manejando todos los detalles en tu idioma.','Start right from day one, with experts handling every detail in your language.')}</p><Button variant="dark" size="lg" className="h-12 rounded-full" asChild><Link to="/onboarding">{t('Empezar Mi Negocio','Start My Business')}<ArrowRight /></Link></Button><small>{t('Trámites 100% en línea · Sin necesidad de residencia ni SSN en EE. UU.','100% online filings · No U.S. residency or SSN required')}</small></div><img src={ctaPhoto} alt={t('Emprendedora latina sonriente trabajando en su laptop','Smiling Latina entrepreneur working on her laptop')} width={1024} height={1024} loading="lazy" /></div></section>
+  <section className="final-cta-wrap container-business"><div className="cta-banner" data-reveal><div className="cta-copy"><div className="section-label">{t('EL SIGUIENTE PASO ES TUYO','YOUR NEXT STEP STARTS HERE')}</div><h2>{t('Alguien allá afuera necesita tu negocio.','Someone out there needs your business.')}</h2><p>{t('Empieza bien desde el principio, con expertos manejando todos los detalles en tu idioma.','Start right from day one, with experts handling every detail in your language.')}</p><Button variant="dark" size="lg" className="h-12 rounded-full" asChild><Link to="/onboarding">{t('Empezar Mi Negocio','Start My Business')}<ArrowRight /></Link></Button><small>{t('Trámites 100% en línea · Sin necesidad de residencia ni SSN en EE. UU.','100% online filings · No U.S. residency or SSN required')}</small></div><img src={ctaPhoto} alt={t('Dueña de negocio latina sonriente trabajando en su laptop','Smiling Latina business owner working on her laptop')} width={1024} height={1024} loading="lazy" /></div></section>
  </main>
   <footer className="site-footer"><div className="container-business"><div className="footer-grid">
   <div className="footer-brand"><Link to="/" aria-label="Business" className="footer-logo-pill"><BrandLogo className="h-8 w-auto object-contain" /></Link><p>{t('Tu negocio merece toda tu atención. Nosotros nos encargamos del registro y los trámites ante el Estado y el IRS, en tu idioma.','Your business deserves your full attention. We handle registration and filings with the state and the IRS, in your language.')}</p>

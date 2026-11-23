@@ -56,13 +56,14 @@
 .quick-form input { width: 100%; min-width: 0; padding: 12px 15px; background: transparent; outline: none; font-size: 14px; }
 .quick-form:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 22%, transparent), 0 14px 34px -14px rgba(0,0,0,.22); }
 .quick-form button { height: 47px; font-size: 13px; padding-inline: 20px; }
-.microcopy { display: flex; flex-wrap: wrap; gap: 12px; font-size: 10px; color: var(--muted-foreground); margin-top: 15px; }
-.microcopy span { display: flex; align-items: center; gap: 4px; }
-.microcopy svg { width: 12px; color: var(--primary); }
 .hero-reassurance { display: flex; align-items: center; gap: 13px; margin-top: 30px; }
 .avatar-stack { display: flex; padding-left: 5px; }
-.avatar-stack span { margin-left: -5px; width: 32px; height: 32px; border: 2px solid var(--background); border-radius: 50%; display: grid; place-items: center; background: var(--accent); font-size: 10px; font-weight: 700; }
-.avatar-stack span:nth-child(2) { background: var(--secondary); }
+.avatar-chip { position: relative; margin-left: -6px; width: 32px; height: 32px; border: 2px solid var(--background); border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: var(--accent); font-size: 10px; font-weight: 700; transition: transform .2s ease; }
+.avatar-chip img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-chip:hover { transform: scale(1.15); z-index: 3; }
+.avatar-chip::after { content: attr(data-label); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(4px); background: var(--foreground); color: #fff; font-size: 10px; font-weight: 600; line-height: 1.3; padding: 5px 8px; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .18s ease, transform .18s ease; }
+.avatar-chip:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+.avatar-more::after { content: none; }
 .hero-reassurance p { font-size: 10px; color: var(--muted-foreground); }
 .hero-reassurance strong { display: block; color: var(--foreground); margin-bottom: 4px; }
 .hero-visual { position: relative; padding: 12px 0 18px; }
@@ -137,7 +138,7 @@
 @media (min-width: 1500px) { .hero { padding-block: 70px 80px; } .hero h1 { font-size: 64px; } .owner-photo { height: 555px; } }
 @media (max-width: 1150px) { .container-business { width: calc(100% - 56px); } .nav-links { gap: 15px; } .nav-links a { font-size: 10px; } .nav-actions { gap: 10px; } .hero { gap: 45px; } .hero h1 { font-size: 46px; } .quick-form { border-radius: 18px; flex-direction: column; } .owner-photo { height: 505px; } .service-card { padding: 20px; } }
 @media (max-width: 900px) { .nav-links { display: none; } .mobile-toggle { display: inline-flex; } .nav-links.mobile-open { position: absolute; top: 80px; left: 0; right: 0; display: grid; gap: 0; padding: 15px 28px; background: var(--background); border-bottom: 1px solid var(--border); } .nav-links.mobile-open a { padding: 13px; font-size: 14px; } .nav-inner { height: 80px; } .hero { gap: 30px; } .hero h1 { font-size: 40px; } .approved-card { top: auto; bottom: 14px; left: -12px; width: 178px; padding: 12px; } .approved-card .small-status { display: none; } .filings-card, .growth-card { display: none; } .photo-caption { display: none; } .service-grid { grid-template-columns: repeat(2,1fr); } .why-layout, .faq-layout { gap: 24px; } .section h2 { font-size: 32px; } }
-@media (max-width: 640px) { .container-business { width: calc(100% - 40px); } .announcement { font-size: 9px; line-height: 1.7; padding: 9px 15px; } .announcement .announcement-end { display: inline; } .nav-inner { height: 74px; gap: 8px; } .nav-cta { display: none; } .nav-actions { gap: 9px; } .hero { grid-template-columns: 1fr; gap: 27px; padding-block: 30px 40px; } .hero h1 { font-size: 40px; margin-block: 20px; line-height: 1.13; } .hero-description { font-size: 13px; line-height: 1.85; } .quick-form { flex-direction: row; border-radius: 99px; } .quick-form input { font-size: 10px; padding-inline: 9px; } .quick-form button { font-size: 10px; padding-inline: 12px; } .quick-form button svg { width: 12px; } .microcopy { font-size: 8px; gap: 8px; } .hero-reassurance { margin-top: 23px; } .hero-visual { margin-inline: 14px; } .owner-photo { height: 380px; } .approved-card { bottom: 12px; left: -12px; width: 170px; padding: 11px; } .photo-caption { bottom: 41px; left: 12px; font-size: 8px; padding: 8px; max-width: 140px; } .section { padding-block: 55px; } .section-intro { flex-direction: column; gap: 18px; align-items: start; } .section h2 { font-size: 30px; } .section-intro > p { font-size: 12px; } .service-grid { gap: 12px; } .service-card { padding: 20px 16px; border-radius: 20px; } .service-card h3 { font-size: 15px; } .service-card p { font-size: 11px; } .service-card button { font-size: 10px; } .why-layout, .faq-layout { grid-template-columns: 1fr; gap: 24px; } .dashboard { padding: 24px; } .faq-list summary { font-size: 13px; } .footer-inner { flex-wrap: wrap; } .footer-inner p { order: 3; width: 100%; text-align: center; margin-top: 10px; } }
+@media (max-width: 640px) { .container-business { width: calc(100% - 40px); } .announcement { font-size: 9px; line-height: 1.7; padding: 9px 15px; } .announcement .announcement-end { display: inline; } .nav-inner { height: 74px; gap: 8px; } .nav-cta { display: none; } .nav-actions { gap: 9px; } .hero { grid-template-columns: 1fr; gap: 27px; padding-block: 30px 40px; } .hero h1 { font-size: 40px; margin-block: 20px; line-height: 1.13; } .hero-description { font-size: 13px; line-height: 1.85; } .quick-form { flex-direction: row; border-radius: 99px; } .quick-form input { font-size: 10px; padding-inline: 9px; } .quick-form button { font-size: 10px; padding-inline: 12px; } .quick-form button svg { width: 12px; } .hero-reassurance { margin-top: 23px; } .hero-visual { margin-inline: 14px; } .owner-photo { height: 380px; } .approved-card { bottom: 12px; left: -12px; width: 170px; padding: 11px; } .photo-caption { bottom: 41px; left: 12px; font-size: 8px; padding: 8px; max-width: 140px; } .section { padding-block: 55px; } .section-intro { flex-direction: column; gap: 18px; align-items: start; } .section h2 { font-size: 30px; } .section-intro > p { font-size: 12px; } .service-grid { gap: 12px; } .service-card { padding: 20px 16px; border-radius: 20px; } .service-card h3 { font-size: 15px; } .service-card p { font-size: 11px; } .service-card button { font-size: 10px; } .why-layout, .faq-layout { grid-template-columns: 1fr; gap: 24px; } .dashboard { padding: 24px; } .faq-list summary { font-size: 13px; } .footer-inner { flex-wrap: wrap; } .footer-inner p { order: 3; width: 100%; text-align: center; margin-top: 10px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 @keyframes revealUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 @keyframes revealImg { from { opacity: 0; transform: scale(.99) translateY(8px); } to { opacity: 1; transform: none; } }
@@ -194,7 +195,8 @@
 .register-head .pricing-sub { margin-top: 0; }
 .register-shell { border: 1px solid var(--border); border-radius: 16px; background: var(--card); overflow: hidden; box-shadow: 0 32px 80px -44px rgba(0,0,0,.55); }
 .register-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); }
-.register-tabs button { display: flex; align-items: center; gap: 14px; text-align: left; padding: 22px 26px; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px; background: transparent; }
+.register-tabs button { display: flex; align-items: center; gap: 14px; text-align: left; padding: 22px 26px; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px; background: transparent; cursor: pointer; transition: background .18s ease, color .18s ease; }
+.register-tabs button:hover:not([data-active=true]) { background: var(--background); }
 .register-tabs button + button { border-left: 1px solid var(--border); }
 .register-num { font-size: 13px; font-weight: 800; color: var(--muted-foreground); }
 .register-tabs strong { font-size: 16px; font-weight: 700; }
@@ -207,7 +209,6 @@
 .entity-price { display: inline-flex; align-items: baseline; gap: 8px; margin-bottom: 18px; }
 .entity-price strong { font-size: 26px; font-weight: 800; color: var(--primary); }
 .entity-price span { font-size: 12px; font-weight: 600; color: var(--muted-foreground); }
-.register-note { margin-top: 16px; text-align: center; font-size: 12.5px; color: rgba(255,255,255,.78); }
 .entity-option-price { margin-left: auto; font-size: 13px; font-weight: 800; color: var(--primary); white-space: nowrap; }
 .pay-plan { display: grid; gap: 8px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
 .pay-plan div { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--muted-foreground); }

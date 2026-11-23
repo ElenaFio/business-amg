@@ -56,20 +56,20 @@ export function AboutBento() {
       <span className="section-label">{t('SOBRE BUSINESS', 'ABOUT BUSINESS')}</span>
       <div className="about-head-grid">
         <h2>{t('Un solo aliado para crear y gestionar tu negocio en EE. UU.', 'One partner to launch and manage your company in the U.S.')}</h2>
-        <p className="about-intro">{t('Business es la plataforma de gestión corporativa de AMG creada para ayudar a emprendedores latinos a registrar, formalizar y mantener al día su compañía en Estados Unidos. Te acompañamos en la apertura de tu LLC, INC o Non-Profit y en cada trámite ante el Estado o el IRS, sin paquetes forzosos y en el idioma que elijas.', 'Business is AMG’s corporate management platform, built to help Latino entrepreneurs register, formalize, and keep their U.S. company in good standing. We support you when opening your LLC, INC, or Non-Profit and with every filing before the state or the IRS, with no forced packages and in the language you choose.')}</p>
+        <p className="about-intro">{t('Business es la plataforma de gestión corporativa que creamos para ayudar a los dueños de negocios latinos a crear, formalizar y mantener sus negocios en Estados Unidos. Te acompañamos desde el registro de tu negocio (LLC, INC o Non-Profit) hasta los trámites que necesitas realizar ante el Estado y el IRS. Con servicios adaptados a tus necesidades y con atención en el idioma que prefieras.', 'Business is the corporate management platform we created to help Latino business owners start, formalize, and maintain their businesses in the United States. We support you from registering your business (LLC, INC, or Non-Profit) through the filings you need before the state and the IRS. With services tailored to your needs and support in the language you prefer.')}</p>
       </div>
     </div>
     <div className="about-layout">
       <div className="about-metrics-col" data-reveal>
         <div className="about-metrics" data-reveal-stagger>
-          <div className="about-metric"><MetricValue value={10} suffix="+" /><p className="about-metric-label">{t('Años de experiencia respaldando emprendedores latinos', 'Years of experience supporting Latino entrepreneurs')}</p></div>
-          <div className="about-metric"><MetricValue value={2000} suffix="+" /><p className="about-metric-label">{t('Compañías registradas (LLC, INC y Non-Profit) en EE. UU.', 'Companies registered (LLC, INC, and Non-Profit) in the U.S.')}</p></div>
-          <div className="about-metric"><MetricValue value={5000} suffix="+" /><p className="about-metric-label">{t('Clientes que gestionan sus renovaciones y trámites corporativos con nosotros.', 'Clients who manage their renewals and corporate filings with us.')}</p></div>
+          <div className="about-metric"><MetricValue value={15} suffix="+" /><p className="about-metric-label">{t('Años de experiencia respaldando dueños de negocios latinos', 'Years of experience supporting Latino business owners')}</p></div>
+          <div className="about-metric"><MetricValue value={10000} suffix="+" /><p className="about-metric-label">{t('Compañías registradas (LLC, INC y Non-Profit) en EE. UU.', 'Companies registered (LLC, INC, and Non-Profit) in the U.S.')}</p></div>
+          <div className="about-metric"><MetricValue value={8000} suffix="+" /><p className="about-metric-label">{t('Clientes que gestionan sus renovaciones y trámites corporativos con nosotros.', 'Clients who manage their renewals and corporate filings with us.')}</p></div>
         </div>
-        <p className="about-foot">{t('Acompañamiento legal y corporativo transparente en cada etapa de tu negocio.', 'Transparent legal and corporate support at every stage of your business.')}</p>
+        <p className="about-foot">{t('Acompañamiento corporativo transparente en cada etapa de tu negocio.', 'Transparent corporate support at every stage of your business.')}</p>
       </div>
       <div className="about-photo-wrap" data-reveal="image">
-        <img className="about-photo-img" src="/images/tab-register.jpg" alt={t('Emprendedor en su cafetería sosteniendo una tablet', 'Entrepreneur in his coffee shop holding a tablet')} loading="lazy" />
+        <img className="about-photo-img" src="/images/tab-register.jpg" alt={t('Dueño de negocio en su cafetería sosteniendo una tablet', 'Business owner in his coffee shop holding a tablet')} loading="lazy" />
       </div>
     </div>
   </div></section>;
@@ -80,29 +80,29 @@ export function RegisterSection() {
   const [active, setActive] = useState(0);
   const entities = [
     { plan: 'LLC', tab: 'LLC',
-      title: t('LLC: Ideal para emprendedores y freelancers', 'LLC: Ideal for entrepreneurs and freelancers'),
-      text: t('La opción más elegida por su flexibilidad fiscal y protección de activos personales. No exige juntas directivas complejas y las ganancias pasan directamente a tus impuestos personales.', 'The most popular choice for its tax flexibility and personal asset protection. It does not require complex boards of directors, and profits pass directly to your personal taxes.'),
-      check: t('Ideal para comercios digitales, e-commerce, consultorías y servicios profesionales.', 'Ideal for online stores, e-commerce, consultancies, and professional services.'),
+      title: t('LLC: Ideal para pequeños y medianos negocios que buscan formalizar.', 'LLC: Ideal for small and mid-sized businesses looking to formalize.'),
+      text: t('Una opción para establecer tu negocio, organizar sus operaciones y separar las finanzas de tu compañía de las personales.', 'An option to establish your business, organize its operations, and separate your company’s finances from your personal ones.'),
+      check: t('Ideal para servicios de limpieza, food trucks, car detailing, construcción y servicios locales.', 'Ideal for cleaning services, food trucks, car detailing, construction, and local services.'),
       cta: t('Registrar LLC', 'Register LLC'),
-      facts: [[t('Tipo de socios', 'Owner type'), t('Miembros', 'Members')], [t('Junta directiva', 'Board of directors'), t('No requerida', 'Not required')], [t('Emite acciones', 'Issues shares'), t('No', 'No')]] },
-    { plan: 'INC', tab: 'INC Corporation',
+      facts: [[t('Dueños', 'Owners'), t('Dueños (1 o más)', 'Owners (1 or more)')], [t('Junta directiva', 'Board of directors'), t('Requerida (de uno o varios miembros)', 'Required (one or more members)')], [t('Emite acciones', 'Issues shares'), t('No', 'No')]] },
+    { plan: 'INC', tab: 'INC',
       title: t('INC: Estructura formal para escalar y buscar inversión', 'INC: A formal structure to scale and raise capital'),
-      text: t('Diseñada para compañías que planean emitir acciones, buscar inversionistas de capital de riesgo (VC) o incorporar socios múltiples bajo una estructura corporativa estricta.', 'Designed for companies that plan to issue shares, seek venture capital (VC) investors, or bring in multiple partners under a strict corporate structure.'),
+      text: t('Una opción para negocios que planean crecer con el apoyo de inversionistas y la participación de varios socios.', 'An option for businesses that plan to grow with investor support and multiple partners.'),
       check: t('Emitir acciones, junta directiva obligatoria, máxima formalidad corporativa.', 'Issue shares, a required board of directors, maximum corporate formality.'),
-      cta: t('Registrar INC (Corporation)', 'Register INC (Corporation)'),
-      facts: [[t('Tipo de socios', 'Owner type'), t('Accionistas', 'Shareholders')], [t('Junta directiva', 'Board of directors'), t('Obligatoria', 'Required')], [t('Emite acciones', 'Issues shares'), t('Sí', 'Yes')]] },
+      cta: t('Registrar INC', 'Register INC'),
+      facts: [[t('Tipo de socios', 'Owner type'), t('Accionistas', 'Shareholders')], [t('Junta directiva', 'Board of directors'), t('Obligatoria (Directors and Officers)', 'Required (Directors and Officers)')], [t('Emite acciones', 'Issues shares'), t('Sí', 'Yes')]] },
     { plan: 'Non-Profit', tab: 'Non-Profit',
-      title: t('Non-Profit: Fundaciones y organizaciones con propósito', 'Non-Profit: Foundations and mission-driven organizations'),
-      text: t('Constitución legal para proyectos benéficos, educativos, religiosos o comunitarios orientados al impacto social sin reparto comercial de utilidades.', 'Legal formation for charitable, educational, religious, or community projects focused on social impact without commercial distribution of profits.'),
-      check: t('Exenciones fiscales federales (opcional), fines sociales y comunitarios.', 'Federal tax exemptions (optional), social and community purposes.'),
+      title: t('Non-Profit: Fundaciones y organizaciones sin fines de lucro.', 'Non-Profit: Foundations and organizations with a social purpose.'),
+      text: t('Constitución formal para proyectos benéficos, educativos, religiosos o comunitarios orientados al impacto social sin reparto comercial de utilidades.', 'Formal formation for charitable, educational, religious, or community projects focused on social impact without commercial distribution of profits.'),
+      check: t('Puede acceder a exenciones fiscales federales (opcional), fines sociales y comunitarios.', 'May qualify for federal tax exemptions (optional), social and community purposes.'),
       cta: t('Registrar Non-Profit', 'Register Non-Profit'),
-      facts: [[t('Tipo de socios', 'Owner type'), t('Consejo / Junta', 'Board')], [t('Junta directiva', 'Board of directors'), t('Obligatoria', 'Required')], [t('Emite acciones', 'Issues shares'), t('No', 'No')]] },
+      facts: [[t('Dueños', 'Owners'), t('Accionistas', 'Shareholders')], [t('Junta directiva', 'Board of directors'), t('Requerida (Directors and Officers)', 'Required (Directors and Officers)')], [t('Emite acciones', 'Issues shares'), t('No', 'No')]] },
   ];
   const cur = entities[active] ?? entities[0]!;
   return <section className="section register-section" id="register"><div className="container-business">
     <div className="register-head" data-reveal>
       <div><span className="section-label">{t('REGISTRO CORPORATIVO', 'CORPORATE REGISTRATION')}</span><h2>{t('Registra tu compañía en EE. UU.', 'Register your company in the U.S.')}</h2></div>
-      <p className="pricing-sub">{t('Elige la estructura legal que mejor se adapta a tu modelo de negocio en cualquiera de los 50 estados.', 'Choose the legal structure that best fits your business model in any of the 50 states.')}</p>
+      <p className="pricing-sub">{t('Elige la estructura corporativa que mejor se adapta a tu modelo de negocio en cualquiera de los 50 estados.', 'Choose the corporate structure that best fits your business model in any of the 50 states.')}</p>
     </div>
     <div className="register-shell" data-reveal>
       <div className="register-tabs" role="tablist">{[0, 1, 2].map(i => <button key={i} type="button" role="tab" aria-selected={active === i} data-active={active === i} onClick={() => setActive(i)}><span className="register-num">0{i + 1}</span><strong>{entities[i]?.tab}</strong></button>)}</div>
@@ -110,7 +110,7 @@ export function RegisterSection() {
         <div className="register-copy">
           <h3>{cur.title}</h3>
           <p>{cur.text}</p>
-          <div className="entity-price"><strong>{money(REGISTRATION_FEE)}</strong><span>{t('Tarifa de Business', 'Business fee')}</span></div>
+          <div className="entity-price"><strong>{money(REGISTRATION_FEE)}</strong><span>{t('Pago único', 'One-time payment')}</span></div>
           <ul className="value-list">{<li><Check size={16} />{cur.check}</li>}</ul>
           <Button variant="dark" className="h-12" asChild><Link to="/onboarding" search={{ plan: cur.plan }}>{cur.cta}<ArrowRight /></Link></Button>
         </div>
@@ -120,7 +120,6 @@ export function RegisterSection() {
         </aside>
       </article>
     </div>
-    <p className="register-note">{t('Tarifa de Business de $349. Las tasas estatales aplican por separado según el Estado y tipo de compañía.', '$349 Business fee. State filing fees apply separately depending on the state and entity type.')}</p>
     <div className="bridge-cta">
       <p>{t('¿Ya tienes tu negocio registrado o necesitas trámites puntuales?', 'Already registered or need one-off filings?')}</p>
       <a className="bridge-link" href="#services">{t('Mira todo lo que puedes gestionar más abajo', 'See everything you can manage below')}<ArrowDown /></a>
@@ -214,12 +213,12 @@ export function TestimonialsSection() {
     { name: 'Roberto Salazar', company: 'SALAZAR REMODELING LLC • CALIFORNIA', photo: roberto, text: t('Business hizo que abrir mi negocio en California fuera súper fácil y en mi idioma. Me ayudaron con todo el papeleo, el Statement of Information y hasta con el Operating Agreement. Los recomiendo a ojos cerrados.', 'Business made opening my company in California super easy, all in my language. They helped with all the paperwork, the Statement of Information, and even the Operating Agreement. I recommend them without a second thought.') },
     { name: 'Patricia Gómez', company: 'SHINE CLEAN PRO LLC • FLORIDA', photo: patricia, text: t('Yo ya tenía mi negocio pero todo estaba desordenado. Con Business hice mi Statement of Information y la renovación de mi licencia sin complicaciones, y me explicaron cada paso.', 'I already had my business, but everything was disorganized. With Business I filed my Statement of Information and renewed my license without any hassle, and they explained every step.') },
     { name: 'Héctor Ramírez', company: 'RAMIREZ AUTO TECH LLC • NEW YORK', photo: hector, text: t('Lo que más valoro es la paciencia y claridad. Me explicaron paso a paso cómo sacar mi EIN con ITIN y hoy tengo mi taller mecánico totalmente en regla con el Estado.', 'What I value most is their patience and clarity. They explained step by step how to get my EIN with an ITIN, and today my auto shop is fully compliant with the state.') },
-    { name: 'Lucía Fernández', company: 'LUZ BEAUTY STUDIO LLC • ARIZONA', photo: undefined as string | undefined, text: t('Pensé que sin SSN no podría tener mi salón legal. Me guiaron con mi ITIN, registraron mi LLC y hoy facturo con tranquilidad.', 'I thought I couldn’t make my salon legal without an SSN. They guided me with my ITIN, registered my LLC, and today I invoice with peace of mind.') },
+    { name: 'Lucía Fernández', company: 'LUZ BEAUTY STUDIO LLC • ARIZONA', photo: undefined as string | undefined, text: t('Pensé que sin SSN no podría tener mi salón en regla. Me guiaron con mi ITIN, registraron mi LLC y hoy facturo con tranquilidad.', 'I thought I couldn’t make my salon compliant without an SSN. They guided me with my ITIN, registered my LLC, and today I invoice with peace of mind.') },
     { name: 'Miguel Torres', company: 'TORRES LANDSCAPING LLC • GEORGIA', photo: undefined as string | undefined, text: t('Mis trámites estaban atrasados. Con Business hice el Amendment de mi compañía y el FINCEN BOI Report en pocos días, y hoy todo está al día con el Estado.', 'My filings were behind. With Business I completed my company’s Amendment and the FINCEN BOI Report in a few days, and today everything is up to date with the state.') },
     { name: 'Andrés Castillo', company: 'CASTILLO FOOD TRUCK LLC • ILLINOIS', photo: undefined as string | undefined, text: t('Con Business renové mi Seller’s Permit y mi licencia sin cerrar el negocio ni un día. Siempre me responden en mi idioma y rápido.', 'With Business I renewed my Seller’s Permit and my license without closing the business for a single day. They always answer quickly, in my language.') },
   ];
   return <section className="section testimonials-section" id="testimonials"><div className="container-business">
-    <div className="section-intro" data-reveal><div><span className="section-label">{t('TESTIMONIOS', 'TESTIMONIALS')}</span><h2>{t('Emprendedores latinos que ya dieron el paso con Business', 'Latino entrepreneurs who already took the step with Business')}</h2><p className="pricing-sub">{t('Historias reales de negocios que crecen en EE. UU.', 'Real stories of businesses growing in the U.S.')}</p></div></div>
+    <div className="section-intro" data-reveal><div><span className="section-label">{t('TESTIMONIOS', 'TESTIMONIALS')}</span><h2>{t('Dueños de negocios latinos que ya dieron el paso con Business', 'Latino business owners who already took the step with Business')}</h2><p className="pricing-sub">{t('Historias reales de negocios que crecen en EE. UU.', 'Real stories of businesses growing in the U.S.')}</p></div></div>
     <div className="review-grid" data-reveal-stagger>{reviews.map(r => <article key={r.name} className="review-card">
       <div className="review-head"><Quote className="quote-mark" /><span className="stars" aria-label={t('5 estrellas', '5 stars')}>{Array.from({ length: 5 }, (_, i) => <Star key={i} size={16} />)}</span></div>
       <p>{r.text}</p>

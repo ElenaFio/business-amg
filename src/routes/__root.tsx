@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Business | Tu negocio, sin complicaciones" },
-      { name: "description", content: "Registro de LLC, INC y Non-profit, renovaciones y trámites ante el Estado y el IRS para emprendedores latinos en Estados Unidos." },
+      { name: "description", content: "Registro de LLC, INC y Non-profit, renovaciones y trámites ante el Estado y el IRS para dueños de negocios latinos en Estados Unidos." },
       { name: "author", content: "Business" },
       { property: "og:title", content: "Business | Tu negocio, sin complicaciones" },
       { property: "og:description", content: "Tu aliado para emprender y crecer en Estados Unidos, en tu idioma." },
