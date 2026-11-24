@@ -406,7 +406,6 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <label>{t('Teléfono', 'Phone')}<div className="phone-field"><span>🇺🇸 +1</span><input required type="tel" inputMode="tel" maxLength={14} value={contact.phone} onChange={e => { const d = e.target.value.replace(/\D/g, '').slice(0, 10); setContact({ ...contact, phone: d.length > 6 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : d.length > 3 ? `(${d.slice(0, 3)}) ${d.slice(3)}` : d }); }} autoComplete="tel-national" placeholder="(555) 123-4567" /></div><small className="field-note">{t('Exactamente 10 dígitos.', 'Exactly 10 digits.')}</small></label>
       </fieldset>
       <fieldset className="portal-block"><legend>{t('Datos de tu negocio', 'Your business details')}</legend>
-        <label>{t('Estado de registro', 'Registration state')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
         <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
         <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>
         <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<select required value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })}><option value="" disabled>{t('Selecciona tu rubro', 'Select your industry')}</option>{industries.map(o => <option key={o.id} value={o.id}>{t(o.es, o.en)}</option>)}</select></label>
@@ -418,7 +417,10 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       <fieldset className="portal-block"><legend>{t('Dirección del negocio', 'Business address')}</legend>
         <label>{t('Dirección principal (calle y número)', 'Primary address (street and number)')}<input required value={biz.street} onChange={e => setBiz({ ...biz, street: e.target.value })} autoComplete="address-line1" placeholder="123 Main St, Suite 4" /></label>
         <label>{t('Ciudad', 'City')}<input required value={biz.city} onChange={e => setBiz({ ...biz, city: e.target.value })} autoComplete="address-level2" /></label>
-        <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={biz.zip} onChange={e => setBiz({ ...biz, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
+        <div className="card-row">
+          <label>{t('Estado', 'State')}<select required value={stateName} onChange={e => setStateName(e.target.value)} autoComplete="address-level1"><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
+          <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={biz.zip} onChange={e => setBiz({ ...biz, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
+        </div>
         <label className="check-line"><input type="checkbox" checked={sameMailing} onChange={e => setSameMailing(e.target.checked)} /><span>{t('Usar la misma dirección para correspondencia', 'Use the same address for mailing')}</span></label>
         {!sameMailing && <>
           <label>{t('Dirección de correspondencia', 'Mailing address')}<input required value={mailing.street} onChange={e => setMailing({ ...mailing, street: e.target.value })} autoComplete="address-line1" /></label>
@@ -480,7 +482,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
           {biz.altName && <div><dt>{t('Nombre alternativo', 'Alternative name')}</dt><dd>{biz.altName}</dd></div>}
           <div><dt>{t('Rubro', 'Industry')}</dt><dd>{industryLabel(biz.industry)}{biz.industry === 'other' && biz.industryOther ? ` · ${biz.industryOther}` : ''}</dd></div>
           <div><dt>{t('Propósito', 'Purpose')}</dt><dd>{biz.purpose}</dd></div>
-          <div><dt>{t('Estado de registro', 'Registration state')}</dt><dd>{stateName}</dd></div>
+          {stateName && <div><dt>{t('Estado de registro', 'Registration state')}</dt><dd>{stateName}</dd></div>}
           {mode === 'register' && biz.street && <div><dt>{t('Dirección del negocio', 'Business address')}</dt><dd>{biz.street}, {biz.city} {biz.zip}</dd></div>}
           <div><dt>{t('Total estimado', 'Estimated total')}</dt><dd>{money(servicesTotal)}</dd></div>
         </dl>
