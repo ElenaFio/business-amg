@@ -508,6 +508,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
           </div>;
         })}
       </div>
+      {picked.length > 0 && <p className="picked-note">{t('Si alguno de los trámites seleccionados requiere información adicional, nuestro equipo se comunicará contigo para solicitarla.', 'If any of the selected filings requires additional information, our team will contact you to request it.')}</p>}
       <div className="pay-total"><span>{t('Total estimado', 'Estimated total')}</span><strong>{money(servicesTotal)}</strong></div>
       {step <= 2 && <Button variant="brand" type={step === 1 ? 'button' : 'submit'} className="h-12 w-full" onClick={step === 1 ? advanceToDetails : undefined}>{step === 1 ? t('Continuar con mis datos', 'Continue with my details') : t('Ir al pago', 'Go to payment')}<ArrowRight /></Button>}
       {step <= 2 && <p className="portal-note">{step === 1 ? t('Completa tus datos en el siguiente paso antes de ir al pago.', 'Complete your details in the next step before going to payment.') : t('Avanzarás a la pasarela de pago segura.', 'You will move on to the secure payment gateway.')}</p>}
