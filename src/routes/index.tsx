@@ -61,8 +61,8 @@ function Landing() {
    <span className="avatar-chip" data-label="Roberto Salazar · Salazar Remodeling LLC"><img src={avatarRoberto} alt="Roberto Salazar, Salazar Remodeling LLC" width={32} height={32} loading="lazy" /></span>
    <span className="avatar-chip" data-label="Patricia Gómez · Shine Clean Pro LLC"><img src={avatarPatricia} alt="Patricia Gómez, Shine Clean Pro LLC" width={32} height={32} loading="lazy" /></span>
    <span className="avatar-chip" data-label="Héctor Ramírez · Ramirez Auto Tech LLC"><img src={avatarHector} alt="Héctor Ramírez, Ramirez Auto Tech LLC" width={32} height={32} loading="lazy" /></span>
-   <span className="avatar-chip avatar-more" aria-hidden="true">+</span>
- </div><p><strong>{t('Grandes sueños. Negocios reales.', 'Big dreams. Real businesses.')}</strong>{t('Un aliado que entiende tu camino.', 'A partner who understands your journey.')}</p></div>
+   <a className="avatar-chip avatar-more" href="#testimonials" data-label={t('Ver testimonios', 'See testimonials')} aria-label={t('Ver testimonios', 'See testimonials')}>+</a>
+ </div><div className="hero-proof-copy"><p><strong>{t('Grandes sueños. Negocios reales.', 'Big dreams. Real businesses.')}</strong>{t('Un aliado que entiende tu camino.', 'A partner who understands your journey.')}</p><a className="hero-testimonials-link" href="#testimonials">{t('Ver testimonios', 'See testimonials')}<ArrowRight /></a></div></div>
  </motion.div>
  <motion.div className="hero-visual" initial={false} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .15 }}>
  <img className="owner-photo" src={owner} alt={t('Representación de un dueño de negocio latino con una tablet en su restaurante', 'Illustration of a Latino business owner holding a tablet in his restaurant')} width={1024} height={1280} fetchPriority="high" />
