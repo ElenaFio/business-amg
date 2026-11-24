@@ -322,11 +322,12 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   const [business, setBusiness] = useState(initialBusiness);
   const [picked, setPicked] = useState<string[]>(initialItem ? [initialItem] : []);
   const [contact, setContact] = useState({ name: '', email: '', phone: '' });
-  const [biz, setBiz] = useState({ street: '', city: '', zip: '', owner: '', altName: '', industry: '', industryOther: '', purpose: '' });
+  const [biz, setBiz] = useState({ street: '', line2: '', city: '', zip: '', owner: '', altName: '', industry: '', industryOther: '', purpose: '' });
   const [mailing, setMailing] = useState({ street: '', city: '', zip: '' });
   const [sameMailing, setSameMailing] = useState(true);
   const [card, setCard] = useState({ name: '', number: '', exp: '', cvc: '' });
   const [payMode, setPayMode] = useState<'full' | 'partial'>('full');
+  const [notes, setNotes] = useState('');
   const [method, setMethod] = useState<'card' | 'other'>('card');
   const [otherMethod, setOtherMethod] = useState<'transfer' | 'cash' | 'other'>('transfer');
   const [error, setError] = useState('');
@@ -416,7 +417,8 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       </fieldset>
       {mode === 'register' && <>
       <fieldset className="portal-block details-block"><legend>{t('Dirección del negocio', 'Business address')}</legend>
-        <label>{t('Dirección principal (calle y número)', 'Primary address (street and number)')}<input required value={biz.street} onChange={e => setBiz({ ...biz, street: e.target.value })} autoComplete="address-line1" placeholder="123 Main St, Suite 4" /></label>
+        <label>{t('Dirección principal (calle y número)', 'Primary address (street and number)')}<input required value={biz.street} onChange={e => setBiz({ ...biz, street: e.target.value })} autoComplete="address-line1" placeholder="123 Main St" /></label>
+        <label>{t('Apt / Suite / Unit (opcional)', 'Apt / Suite / Unit (optional)')}<input value={biz.line2} onChange={e => setBiz({ ...biz, line2: e.target.value })} autoComplete="address-line2" placeholder={t('Suite 4, Apt 2B', 'Suite 4, Apt 2B')} /></label>
         <label>{t('Ciudad', 'City')}<input required value={biz.city} onChange={e => setBiz({ ...biz, city: e.target.value })} autoComplete="address-level2" /></label>
         <div className="card-row">
           <label>{t('Estado', 'State')}<select required value={stateName} onChange={e => setStateName(e.target.value)} autoComplete="address-level1"><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
@@ -460,6 +462,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
           <p className="portal-note">{t('Un asesor coordina el pago por este medio y te envía las instrucciones. No necesitas ingresar datos de tarjeta.', 'An advisor coordinates the payment through this channel and sends you the instructions. No card details are needed.')}</p>
         </>}
       </fieldset>
+      <div className="portal-block"><label>{t('Notas o comentarios adicionales (opcional)', 'Notes or additional comments (optional)')}<textarea rows={3} value={notes} onChange={e => setNotes(e.target.value)} placeholder={t('Ej. horario para llamarte, indicaciones especiales…', 'E.g. best time to call, special instructions…')} /></label></div>
       {payMode === 'partial' && <div className="pay-plan">
         <div><span>{t('Pago 1 · hoy', 'Payment 1 · today')}</span><strong>{money(firstPayment)}</strong></div>
         <div><span>{t('Pago 2 · a 30 días', 'Payment 2 · in 30 days')}</span><strong>{money(servicesTotal - firstPayment)}</strong></div>
@@ -484,7 +487,8 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
           <div><dt>{t('Rubro', 'Industry')}</dt><dd>{industryLabel(biz.industry)}{biz.industry === 'other' && biz.industryOther ? ` · ${biz.industryOther}` : ''}</dd></div>
           <div><dt>{t('Propósito', 'Purpose')}</dt><dd>{biz.purpose}</dd></div>
           {stateName && <div><dt>{t('Estado de registro', 'Registration state')}</dt><dd>{stateName}</dd></div>}
-          {mode === 'register' && biz.street && <div><dt>{t('Dirección del negocio', 'Business address')}</dt><dd>{biz.street}, {biz.city} {biz.zip}</dd></div>}
+          {mode === 'register' && biz.street && <div><dt>{t('Dirección del negocio', 'Business address')}</dt><dd>{biz.street}{biz.line2 ? `, ${biz.line2}` : ''}, {biz.city} {biz.zip}</dd></div>}
+          {notes && <div><dt>{t('Notas adicionales', 'Additional notes')}</dt><dd>{notes}</dd></div>}
           <div><dt>{t('Total estimado', 'Estimated total')}</dt><dd>{money(servicesTotal)}</dd></div>
         </dl>
         <p className="portal-note">{t(`Pago: ${method === 'card' ? 'Tarjeta' : otherMethod === 'transfer' ? 'Transferencia bancaria' : otherMethod === 'cash' ? 'Efectivo' : 'Otro método'} · ${payMode === 'full' ? 'Pago completo' : 'Cuotas (2 pagos)'}`, `Payment: ${method === 'card' ? 'Card' : otherMethod === 'transfer' ? 'Bank transfer' : otherMethod === 'cash' ? 'Cash' : 'Other method'} · ${payMode === 'full' ? 'Full payment' : 'Installments (2 payments)'}`)}</p>
