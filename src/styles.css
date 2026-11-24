@@ -296,18 +296,18 @@
 .segmented button[data-active=true] { border-color: var(--primary); background: var(--accent); }
 .radio-cards button span { display: grid; gap: 3px; }
 .radio-cards small { font-weight: 500; font-size: 12px; line-height: 1.45; color: var(--muted-foreground); }
-.filing-picker { display: grid; gap: 16px; }
-.filing-section { display: grid; gap: 12px; border-top: 1px solid var(--border); padding-top: 22px; }
-.filing-heading { font-size: 14px; font-weight: 800; }
-.filing-hint { font-size: 13px; line-height: 1.55; color: var(--muted-foreground); margin-top: -4px; }
+.filing-picker { display: grid; gap: 20px; }
+.filing-section { display: grid; gap: 14px; border-top: 1px solid var(--border); padding-top: 22px; }
+.filing-heading { font-size: 14px; font-weight: 800; margin-bottom: 8px; }
+.filing-hint { font-size: 13px; line-height: 1.55; color: var(--muted-foreground); margin: 0 0 12px; }
 .filing-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 15px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); text-align: left; transition: border-color .18s ease, box-shadow .18s ease; }
 .filing-toggle:hover { border-color: var(--primary); box-shadow: 0 10px 26px -18px rgba(0,0,0,.35); }
 .filing-toggle strong { font-size: 13px; font-weight: 700; }
 .filing-toggle-meta { font-size: 12px; font-weight: 600; color: var(--muted-foreground); background: var(--background); border-radius: 99px; padding: 4px 10px; white-space: nowrap; }
 .filing-collapse { display: block; }
 .filing-collapse-inner { overflow: hidden; max-height: 0; opacity: 0; transition: max-height .35s ease, opacity .25s ease; }
-.filing-collapse.is-open .filing-collapse-inner { max-height: 1400px; opacity: 1; } /* shortcut: cap de revelado; súbelo si el catálogo crece */
-.filing-group { display: grid; gap: 10px; }
+.filing-collapse.is-open .filing-collapse-inner { max-height: 1400px; opacity: 1; padding-top: 18px; } /* shortcut: cap de revelado; súbelo si el catálogo crece */
+.filing-group { display: grid; gap: 14px; }
 .filing-group h4 { font-size: 13px; font-weight: 800; }
 .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .check-row { display: flex; align-items: flex-start; gap: 9px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; font-size: 13px; font-weight: 500; line-height: 1.4; background: var(--card); cursor: pointer; transition: border-color .18s ease, background .18s ease; }
@@ -328,7 +328,6 @@
 .portal-check { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--primary); }
 .picked-list li { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .picked-price { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--muted-foreground); }
-.picked-state { display: block; margin-top: 2px; font-size: 11px; font-weight: 500; color: var(--muted-foreground); }
 .picked-remove { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 6px; color: var(--muted-foreground); transition: background .18s ease, color .18s ease; }
 .picked-remove:hover { background: var(--muted); color: var(--foreground); }
 .picked-remove svg { width: 13px; height: 13px; }

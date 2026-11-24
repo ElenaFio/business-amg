@@ -330,7 +330,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   const [method, setMethod] = useState<'card' | 'other'>('card');
   const [otherMethod, setOtherMethod] = useState<'transfer' | 'cash' | 'other'>('transfer');
   const [error, setError] = useState('');
-  const canAdvance = stateName !== '' && (mode === 'register' || picked.length > 0);
+  const canAdvance = mode === 'register' || picked.length > 0;
   const servicesTotal = (mode === 'register' ? REGISTRATION_FEE : 0) + picked.reduce((sum, item) => sum + (filingPrices[item] ?? 0), 0);
   const firstPayment = Math.round(servicesTotal * 50) / 100;
   const label = (item: string) => t(filingEs[item] ?? item, item);
@@ -344,7 +344,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   ];
   const zipValid = (zip: string) => /^\d{5}(-\d{4})?$/.test(zip);
   const advanceToDetails = () => {
-    if (!canAdvance) { setError(t('Completa el Estado; si gestionas tu negocio, elige al menos un trámite.', 'Complete the state; if managing your company, select at least one filing.')); return; }
+    if (!canAdvance) { setError(t('Para gestionar tu negocio, elige al menos un trámite.', 'To manage your company, select at least one filing.')); return; }
     setError(''); setStep(2); window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const submit = (e: FormEvent) => {
@@ -380,9 +380,6 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       {mode === 'register' && <fieldset className="portal-block"><legend>{t('Entidad', 'Entity')}</legend>
         <div className="radio-cards">{entities.map(e => <button key={e.plan} type="button" role="radio" aria-checked={entity === e.plan} data-active={entity === e.plan} onClick={() => setEntity(e.plan)}><Building2 size={18} /><span><strong>{e.title}</strong><small>{e.text}</small></span><span className="entity-option-price">{money(REGISTRATION_FEE)}</span></button>)}</div>
       </fieldset>}
-      <fieldset className="portal-block"><legend>{t('Estado de registro', 'Registration state')}</legend>
-        <label>{t('Estado', 'State')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
-      </fieldset>
       {mode === 'register' ? <div className="filing-section">
         <button type="button" className="filing-toggle" aria-expanded={showFilings} aria-controls="filing-picker" onClick={() => setShowFilings(v => !v)}>
           <strong>{t('¿Necesitas trámites adicionales?', 'Need additional filings?')}</strong>
@@ -410,6 +407,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <label>{t('Nombre del titular o miembro principal', 'Owner or main member name')}<input required value={biz.owner} onChange={e => setBiz({ ...biz, owner: e.target.value })} autoComplete="name" /></label>
       </fieldset>
       <fieldset className="portal-block"><legend>{t('Datos de tu negocio', 'Your business details')}</legend>
+        <label>{t('Estado de registro', 'Registration state')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
         <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
         <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>
         <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<select required value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })}><option value="" disabled>{t('Selecciona tu rubro', 'Select your industry')}</option>{industries.map(o => <option key={o.id} value={o.id}>{t(o.es, o.en)}</option>)}</select></label>
@@ -502,7 +500,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       <div className="picked-block">
         {mode === 'register' && <div className="picked-group">
           <h4>{t('Registro de negocio', 'Business registration')}</h4>
-          <ul className="picked-list"><li><span>{entity === 'Non-Profit' ? t('Sin Fines de Lucro', 'Non-Profit') : entity}{stateName ? <small className="picked-state">{t('Estado de registro', 'Registration state')}: {stateName}</small> : null}</span><span className="picked-price">{money(REGISTRATION_FEE)}</span></li></ul>
+          <ul className="picked-list"><li><span>{entity === 'Non-Profit' ? t('Sin Fines de Lucro', 'Non-Profit') : entity}</span><span className="picked-price">{money(REGISTRATION_FEE)}</span></li></ul>
         </div>}
         {filingCatalog.map(group => {
           const items = group.items.filter(item => picked.includes(item));
