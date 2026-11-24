@@ -285,9 +285,9 @@
 .portal { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: start; }
 .portal-main { background: var(--card); border-radius: 24px; padding: 32px; display: grid; gap: 24px; }
 .portal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.portal-block { border: 0; padding: 0; margin: 0; display: grid; gap: 12px; }
-.portal-block legend { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted-foreground); margin-bottom: 10px; }
-.portal-block.details-block { border-top: 1px solid color-mix(in oklch, var(--border) 80%, transparent); padding-top: 24px; }
+.portal-block { border: 0; border-top: 1px solid oklch(0.84 0.008 90 / 0.8); margin: 16px 0 0; padding: 28px 0 0; display: grid; gap: 12px; }
+.portal-block legend { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted-foreground); margin-bottom: 10px; border-left: 3px solid var(--primary); padding-left: 10px; }
+.portal-block.details-block { border-top: 1px solid oklch(0.84 0.008 90 / 0.8); padding-top: 28px; margin-top: 16px; }
 .portal-block.details-block legend { font-size: 12px; color: var(--foreground); letter-spacing: .05em; }
 .portal-block label { font-size: 13px; font-weight: 600; display: grid; gap: 7px; }
 .field-note { font-size: 11.5px; line-height: 1.5; font-weight: 500; color: var(--muted-foreground); }
@@ -299,8 +299,8 @@
 .radio-cards button span { display: grid; gap: 3px; }
 .radio-cards small { font-weight: 500; font-size: 12px; line-height: 1.45; color: var(--muted-foreground); }
 .filing-picker { display: grid; gap: 20px; }
-.filing-section { display: grid; gap: 14px; border-top: 1px solid var(--border); padding-top: 22px; }
-.filing-heading { font-size: 14px; font-weight: 800; margin-bottom: 8px; }
+.filing-section { display: grid; gap: 14px; border-top: 1px solid oklch(0.84 0.008 90 / 0.8); padding-top: 28px; margin-top: 16px; }
+.filing-heading { font-size: 14px; font-weight: 800; margin-bottom: 8px; border-left: 3px solid var(--primary); padding-left: 10px; }
 .filing-hint { font-size: 13px; line-height: 1.55; color: var(--muted-foreground); margin: 0 0 12px; }
 .filing-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 15px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); text-align: left; transition: border-color .18s ease, box-shadow .18s ease; }
 .filing-toggle:hover { border-color: var(--primary); box-shadow: 0 10px 26px -18px rgba(0,0,0,.35); }
