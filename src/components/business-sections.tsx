@@ -343,6 +343,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
     { plan: 'Non-Profit', title: t('Sin Fines de Lucro', 'Non-Profit'), text: t('Entidad para organizaciones benéficas o comunitarias.', 'An entity for charitable or community organizations.') },
   ];
   const zipValid = (zip: string) => /^\d{5}(-\d{4})?$/.test(zip);
+  const formatZip = (value: string) => { const digits = value.replace(/\D/g, '').slice(0, 9); return digits.length > 5 ? `${digits.slice(0, 5)}-${digits.slice(5)}` : digits; };
   const advanceToDetails = () => {
     if (!canAdvance) { setError(t('Para gestionar tu negocio, elige al menos un trámite.', 'To manage your company, select at least one filing.')); return; }
     setError(''); setStep(2); window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -400,12 +401,12 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       </>}
       {step === 2 && <>
       <button type="button" className="portal-back" onClick={() => { setStep(1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><ArrowLeft />{t('Editar solicitud', 'Edit request')}</button>
-      <fieldset className="portal-block"><legend>{t('Tus datos', 'Your details')}</legend>
+      <fieldset className="portal-block details-block"><legend>{t('Tus datos', 'Your details')}</legend>
         <label>{t('Nombre completo', 'Full name')}<input required value={contact.name} onChange={e => setContact({ ...contact, name: e.target.value })} autoComplete="name" /></label>
         <label>{t('Correo electrónico', 'Email')}<input required type="email" value={contact.email} onChange={e => setContact({ ...contact, email: e.target.value })} autoComplete="email" /></label>
         <label>{t('Teléfono', 'Phone')}<div className="phone-field"><span>🇺🇸 +1</span><input required type="tel" inputMode="tel" maxLength={14} value={contact.phone} onChange={e => { const d = e.target.value.replace(/\D/g, '').slice(0, 10); setContact({ ...contact, phone: d.length > 6 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : d.length > 3 ? `(${d.slice(0, 3)}) ${d.slice(3)}` : d }); }} autoComplete="tel-national" placeholder="(555) 123-4567" /></div><small className="field-note">{t('Exactamente 10 dígitos.', 'Exactly 10 digits.')}</small></label>
       </fieldset>
-      <fieldset className="portal-block"><legend>{t('Datos de tu negocio', 'Your business details')}</legend>
+      <fieldset className="portal-block details-block"><legend>{t('Datos de tu negocio', 'Your business details')}</legend>
         <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
         <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>
         <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<select required value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })}><option value="" disabled>{t('Selecciona tu rubro', 'Select your industry')}</option>{industries.map(o => <option key={o.id} value={o.id}>{t(o.es, o.en)}</option>)}</select></label>
@@ -414,18 +415,18 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <label>{t('Nombre del titular o miembro principal', 'Owner or main member name')}<input required value={biz.owner} onChange={e => setBiz({ ...biz, owner: e.target.value })} autoComplete="name" /></label>
       </fieldset>
       {mode === 'register' && <>
-      <fieldset className="portal-block"><legend>{t('Dirección del negocio', 'Business address')}</legend>
+      <fieldset className="portal-block details-block"><legend>{t('Dirección del negocio', 'Business address')}</legend>
         <label>{t('Dirección principal (calle y número)', 'Primary address (street and number)')}<input required value={biz.street} onChange={e => setBiz({ ...biz, street: e.target.value })} autoComplete="address-line1" placeholder="123 Main St, Suite 4" /></label>
         <label>{t('Ciudad', 'City')}<input required value={biz.city} onChange={e => setBiz({ ...biz, city: e.target.value })} autoComplete="address-level2" /></label>
         <div className="card-row">
           <label>{t('Estado', 'State')}<select required value={stateName} onChange={e => setStateName(e.target.value)} autoComplete="address-level1"><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
-          <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={biz.zip} onChange={e => setBiz({ ...biz, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
+          <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={biz.zip} onChange={e => setBiz({ ...biz, zip: formatZip(e.target.value) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
         </div>
         <label className="check-line"><input type="checkbox" checked={sameMailing} onChange={e => setSameMailing(e.target.checked)} /><span>{t('Usar la misma dirección para correspondencia', 'Use the same address for mailing')}</span></label>
         {!sameMailing && <>
           <label>{t('Dirección de correspondencia', 'Mailing address')}<input required value={mailing.street} onChange={e => setMailing({ ...mailing, street: e.target.value })} autoComplete="address-line1" /></label>
           <label>{t('Ciudad', 'City')}<input required value={mailing.city} onChange={e => setMailing({ ...mailing, city: e.target.value })} autoComplete="address-level2" /></label>
-          <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={mailing.zip} onChange={e => setMailing({ ...mailing, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
+          <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={mailing.zip} onChange={e => setMailing({ ...mailing, zip: formatZip(e.target.value) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
         </>}
       </fieldset>
       </>}
