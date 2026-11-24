@@ -409,7 +409,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       </fieldset>
       <fieldset className="portal-block details-block"><legend>{t('Datos de tu negocio', 'Your business details')}</legend>
         <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
-        <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>
+        {mode === 'register' && <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>}
         <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<select required value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })}><option value="" disabled>{t('Selecciona tu rubro', 'Select your industry')}</option>{industries.map(o => <option key={o.id} value={o.id}>{t(o.es, o.en)}</option>)}</select></label>
         {biz.industry === 'other' && <label>{t('Especifica tu rubro', 'Specify your industry')}<input required value={biz.industryOther} onChange={e => setBiz({ ...biz, industryOther: e.target.value })} placeholder={t('Ej. Agricultura, ganadería, imprenta…', 'E.g. farming, livestock, printing…')} /></label>}
         <label>{t('Propósito del negocio', 'Business purpose')}<textarea required rows={3} value={biz.purpose} onChange={e => setBiz({ ...biz, purpose: e.target.value })} placeholder={t('Ej. Venta de comida preparada y servicio de catering.', 'E.g. Prepared food sales and catering services.')} /></label>
@@ -483,7 +483,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
           <div><dt>{t('Correo', 'Email')}</dt><dd>{contact.email}</dd></div>
           <div><dt>{t('Teléfono', 'Phone')}</dt><dd>{contact.phone}</dd></div>
           <div><dt>{t('Negocio', 'Business')}</dt><dd>{business}</dd></div>
-          {biz.altName && <div><dt>{t('Nombre alternativo', 'Alternative name')}</dt><dd>{biz.altName}</dd></div>}
+          {mode === 'register' && biz.altName && <div><dt>{t('Nombre alternativo', 'Alternative name')}</dt><dd>{biz.altName}</dd></div>}
           <div><dt>{t('Rubro', 'Industry')}</dt><dd>{industryLabel(biz.industry)}{biz.industry === 'other' && biz.industryOther ? ` · ${biz.industryOther}` : ''}</dd></div>
           <div><dt>{t('Propósito', 'Purpose')}</dt><dd>{biz.purpose}</dd></div>
           {stateName && <div><dt>{t('Estado de registro', 'Registration state')}</dt><dd>{stateName}</dd></div>}
