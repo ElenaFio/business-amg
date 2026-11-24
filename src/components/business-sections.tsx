@@ -240,6 +240,19 @@ export function TestimonialsSection() {
 
 export const usStates = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','Washington D.C.','West Virginia','Wisconsin','Wyoming'];
 
+const industries = [
+  { id: 'food', es: 'Restaurante / Comida', en: 'Restaurant / Food' },
+  { id: 'construction', es: 'Construcción / Remodelación', en: 'Construction / Remodeling' },
+  { id: 'cleaning', es: 'Limpieza', en: 'Cleaning' },
+  { id: 'transport', es: 'Transporte / Logística', en: 'Transportation / Logistics' },
+  { id: 'retail', es: 'Comercio / Retail', en: 'Retail / Commerce' },
+  { id: 'professional', es: 'Servicios Profesionales / Consultoría', en: 'Professional Services / Consulting' },
+  { id: 'beauty', es: 'Belleza / Estética', en: 'Beauty / Aesthetics' },
+  { id: 'health', es: 'Salud / Bienestar', en: 'Health / Wellness' },
+  { id: 'tech', es: 'Tecnología / E-commerce', en: 'Technology / E-commerce' },
+  { id: 'other', es: 'Otro', en: 'Other' },
+];
+
 const filingCatalog = [
   { title: 'Company Formation', items: ['Articles of Organization', 'Articles of Incorporation', 'Initial Report', 'EIN Number', 'New Entity', 'Corporate Book', 'Operating Agreement'] },
   { title: 'Renewals', items: ['Agent for Service of Process', 'Statement of Information', "Seller's Permit Renewal", 'Business License Tax Renewal'] },
@@ -309,7 +322,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   const [business, setBusiness] = useState(initialBusiness);
   const [picked, setPicked] = useState<string[]>(initialItem ? [initialItem] : []);
   const [contact, setContact] = useState({ name: '', email: '', phone: '' });
-  const [biz, setBiz] = useState({ street: '', city: '', state: '', zip: '', owner: '', altName: '', industry: '', purpose: '' });
+  const [biz, setBiz] = useState({ street: '', city: '', state: '', zip: '', owner: '', altName: '', industry: '', industryOther: '', purpose: '' });
   const [mailing, setMailing] = useState({ street: '', city: '', state: '', zip: '' });
   const [sameMailing, setSameMailing] = useState(true);
   const [card, setCard] = useState({ name: '', number: '', exp: '', cvc: '' });
@@ -317,7 +330,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   const [method, setMethod] = useState<'card' | 'other'>('card');
   const [otherMethod, setOtherMethod] = useState<'transfer' | 'cash' | 'other'>('transfer');
   const [error, setError] = useState('');
-  const canAdvance = stateName !== '' && business.trim() !== '' && biz.industry.trim() !== '' && biz.purpose.trim() !== '' && (mode === 'register' || picked.length > 0);
+  const canAdvance = stateName !== '' && business.trim() !== '' && biz.industry !== '' && (biz.industry !== 'other' || biz.industryOther.trim() !== '') && biz.purpose.trim() !== '' && (mode === 'register' || picked.length > 0);
   const servicesTotal = (mode === 'register' ? REGISTRATION_FEE : 0) + picked.reduce((sum, item) => sum + (filingPrices[item] ?? 0), 0);
   const firstPayment = Math.round(servicesTotal * 50) / 100;
   const label = (item: string) => t(filingEs[item] ?? item, item);
@@ -370,7 +383,8 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <label>{t('Estado de registro', 'Registration state')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
         <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
         <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>
-        <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<input required list="industry-options" value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })} placeholder={t('Restaurante, construcción, transporte…', 'Restaurant, construction, transportation…')} /><datalist id="industry-options">{(['Restaurante','Construcción','Comercio minorista','Servicios profesionales','Transporte','Salud','Belleza','Tecnología','Bienes raíces','Educación','Otro'] as const).map(o => <option key={o} value={t(o, ({ 'Restaurante': 'Restaurant', 'Construcción': 'Construction', 'Comercio minorista': 'Retail', 'Servicios profesionales': 'Professional services', 'Transporte': 'Transportation', 'Salud': 'Healthcare', 'Belleza': 'Beauty', 'Tecnología': 'Technology', 'Bienes raíces': 'Real estate', 'Educación': 'Education', 'Otro': 'Other' } as Record<string, string>)[o] ?? o)} />)}</datalist></label>
+        <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<select required value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })}><option value="" disabled>{t('Selecciona tu rubro', 'Select your industry')}</option>{industries.map(o => <option key={o.id} value={o.id}>{t(o.es, o.en)}</option>)}</select></label>
+        {biz.industry === 'other' && <label>{t('Especifica tu rubro', 'Specify your industry')}<input required value={biz.industryOther} onChange={e => setBiz({ ...biz, industryOther: e.target.value })} placeholder={t('Ej. Agricultura, ganadería, imprenta…', 'E.g. farming, livestock, printing…')} /></label>}
         <label>{t('Propósito del negocio', 'Business purpose')}<textarea required rows={3} value={biz.purpose} onChange={e => setBiz({ ...biz, purpose: e.target.value })} placeholder={t('Ej. Venta de comida preparada y servicio de catering.', 'E.g. Prepared food sales and catering services.')} /></label>
       </fieldset>
       {mode === 'register' ? <div className="filing-section">
@@ -475,7 +489,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       <div className="picked-block">
         {mode === 'register' && <div className="picked-group">
           <h4>{t('Registro de negocio', 'Business registration')}</h4>
-          <ul className="picked-list"><li><span>{entity === 'Non-Profit' ? t('Sin Fines de Lucro', 'Non-Profit') : entity}</span><span className="picked-price">{money(REGISTRATION_FEE)}</span></li></ul>
+          <ul className="picked-list"><li><span>{entity === 'Non-Profit' ? t('Sin Fines de Lucro', 'Non-Profit') : entity}{stateName ? <small className="picked-state">{t('Estado de registro', 'Registration state')}: {stateName}</small> : null}</span><span className="picked-price">{money(REGISTRATION_FEE)}</span></li></ul>
         </div>}
         {filingCatalog.map(group => {
           const items = group.items.filter(item => picked.includes(item));
@@ -486,12 +500,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
           </div>;
         })}
       </div>
-      <dl className="summary">
-        <div><dt>{t('Estado', 'State')}</dt><dd>{stateName || '—'}</dd></div>
-        <div><dt>{t('Trámites adicionales', 'Additional filings')}</dt><dd>{picked.length}</dd></div>
-        <div><dt>{t('Servicios (estimado)', 'Services (estimate)')}</dt><dd>{money(servicesTotal)}</dd></div>
-      </dl>
-      <p className="portal-note">{t('Tarifa base de servicio desde $349. Las tasas estatales aplican por separado según el Estado y tipo de compañía.', 'Base service fee starting at $349. State filing fees apply separately depending on the state and entity type.')}</p>
+      <div className="pay-total"><span>{t('Total estimado', 'Estimated total')}</span><strong>{money(servicesTotal)}</strong></div>
       {step <= 2 && <Button variant="brand" type={step === 1 ? 'button' : 'submit'} className="h-12 w-full" onClick={step === 1 ? advanceToDetails : undefined}>{step === 1 ? t('Continuar con mis datos', 'Continue with my details') : t('Ir al pago', 'Go to payment')}<ArrowRight /></Button>}
       {step <= 2 && <p className="portal-note">{step === 1 ? t('Completa tus datos en el siguiente paso antes de ir al pago.', 'Complete your details in the next step before going to payment.') : t('Avanzarás a la pasarela de pago segura.', 'You will move on to the secure payment gateway.')}</p>}
     </aside>
