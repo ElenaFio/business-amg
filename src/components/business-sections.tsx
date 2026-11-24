@@ -322,8 +322,8 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   const [business, setBusiness] = useState(initialBusiness);
   const [picked, setPicked] = useState<string[]>(initialItem ? [initialItem] : []);
   const [contact, setContact] = useState({ name: '', email: '', phone: '' });
-  const [biz, setBiz] = useState({ street: '', city: '', state: '', zip: '', owner: '', altName: '', industry: '', industryOther: '', purpose: '' });
-  const [mailing, setMailing] = useState({ street: '', city: '', state: '', zip: '' });
+  const [biz, setBiz] = useState({ street: '', city: '', zip: '', owner: '', altName: '', industry: '', industryOther: '', purpose: '' });
+  const [mailing, setMailing] = useState({ street: '', city: '', zip: '' });
   const [sameMailing, setSameMailing] = useState(true);
   const [card, setCard] = useState({ name: '', number: '', exp: '', cvc: '' });
   const [payMode, setPayMode] = useState<'full' | 'partial'>('full');
@@ -404,7 +404,6 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <label>{t('Nombre completo', 'Full name')}<input required value={contact.name} onChange={e => setContact({ ...contact, name: e.target.value })} autoComplete="name" /></label>
         <label>{t('Correo electrónico', 'Email')}<input required type="email" value={contact.email} onChange={e => setContact({ ...contact, email: e.target.value })} autoComplete="email" /></label>
         <label>{t('Teléfono', 'Phone')}<div className="phone-field"><span>🇺🇸 +1</span><input required type="tel" inputMode="tel" maxLength={14} value={contact.phone} onChange={e => { const d = e.target.value.replace(/\D/g, '').slice(0, 10); setContact({ ...contact, phone: d.length > 6 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : d.length > 3 ? `(${d.slice(0, 3)}) ${d.slice(3)}` : d }); }} autoComplete="tel-national" placeholder="(555) 123-4567" /></div><small className="field-note">{t('Exactamente 10 dígitos.', 'Exactly 10 digits.')}</small></label>
-        <label>{t('Nombre del titular o miembro principal', 'Owner or main member name')}<input required value={biz.owner} onChange={e => setBiz({ ...biz, owner: e.target.value })} autoComplete="name" /></label>
       </fieldset>
       <fieldset className="portal-block"><legend>{t('Datos de tu negocio', 'Your business details')}</legend>
         <label>{t('Estado de registro', 'Registration state')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
@@ -413,23 +412,18 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<select required value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })}><option value="" disabled>{t('Selecciona tu rubro', 'Select your industry')}</option>{industries.map(o => <option key={o.id} value={o.id}>{t(o.es, o.en)}</option>)}</select></label>
         {biz.industry === 'other' && <label>{t('Especifica tu rubro', 'Specify your industry')}<input required value={biz.industryOther} onChange={e => setBiz({ ...biz, industryOther: e.target.value })} placeholder={t('Ej. Agricultura, ganadería, imprenta…', 'E.g. farming, livestock, printing…')} /></label>}
         <label>{t('Propósito del negocio', 'Business purpose')}<textarea required rows={3} value={biz.purpose} onChange={e => setBiz({ ...biz, purpose: e.target.value })} placeholder={t('Ej. Venta de comida preparada y servicio de catering.', 'E.g. Prepared food sales and catering services.')} /></label>
+        <label>{t('Nombre del titular o miembro principal', 'Owner or main member name')}<input required value={biz.owner} onChange={e => setBiz({ ...biz, owner: e.target.value })} autoComplete="name" /></label>
       </fieldset>
       {mode === 'register' && <>
       <fieldset className="portal-block"><legend>{t('Dirección del negocio', 'Business address')}</legend>
         <label>{t('Dirección principal (calle y número)', 'Primary address (street and number)')}<input required value={biz.street} onChange={e => setBiz({ ...biz, street: e.target.value })} autoComplete="address-line1" placeholder="123 Main St, Suite 4" /></label>
         <label>{t('Ciudad', 'City')}<input required value={biz.city} onChange={e => setBiz({ ...biz, city: e.target.value })} autoComplete="address-level2" /></label>
-        <div className="card-row">
-          <label>{t('Estado', 'State')}<select required value={biz.state} onChange={e => setBiz({ ...biz, state: e.target.value })} autoComplete="address-level1"><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
-          <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={biz.zip} onChange={e => setBiz({ ...biz, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
-        </div>
+        <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={biz.zip} onChange={e => setBiz({ ...biz, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
         <label className="check-line"><input type="checkbox" checked={sameMailing} onChange={e => setSameMailing(e.target.checked)} /><span>{t('Usar la misma dirección para correspondencia', 'Use the same address for mailing')}</span></label>
         {!sameMailing && <>
           <label>{t('Dirección de correspondencia', 'Mailing address')}<input required value={mailing.street} onChange={e => setMailing({ ...mailing, street: e.target.value })} autoComplete="address-line1" /></label>
           <label>{t('Ciudad', 'City')}<input required value={mailing.city} onChange={e => setMailing({ ...mailing, city: e.target.value })} autoComplete="address-level2" /></label>
-          <div className="card-row">
-            <label>{t('Estado', 'State')}<select required value={mailing.state} onChange={e => setMailing({ ...mailing, state: e.target.value })} autoComplete="address-level1"><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
-            <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={mailing.zip} onChange={e => setMailing({ ...mailing, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
-          </div>
+          <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={mailing.zip} onChange={e => setMailing({ ...mailing, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
         </>}
       </fieldset>
       </>}
@@ -487,7 +481,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
           <div><dt>{t('Rubro', 'Industry')}</dt><dd>{industryLabel(biz.industry)}{biz.industry === 'other' && biz.industryOther ? ` · ${biz.industryOther}` : ''}</dd></div>
           <div><dt>{t('Propósito', 'Purpose')}</dt><dd>{biz.purpose}</dd></div>
           <div><dt>{t('Estado de registro', 'Registration state')}</dt><dd>{stateName}</dd></div>
-          {mode === 'register' && biz.street && <div><dt>{t('Dirección del negocio', 'Business address')}</dt><dd>{biz.street}, {biz.city}, {biz.state} {biz.zip}</dd></div>}
+          {mode === 'register' && biz.street && <div><dt>{t('Dirección del negocio', 'Business address')}</dt><dd>{biz.street}, {biz.city} {biz.zip}</dd></div>}
           <div><dt>{t('Total estimado', 'Estimated total')}</dt><dd>{money(servicesTotal)}</dd></div>
         </dl>
         <p className="portal-note">{t(`Pago: ${method === 'card' ? 'Tarjeta' : otherMethod === 'transfer' ? 'Transferencia bancaria' : otherMethod === 'cash' ? 'Efectivo' : 'Otro método'} · ${payMode === 'full' ? 'Pago completo' : 'Cuotas (2 pagos)'}`, `Payment: ${method === 'card' ? 'Card' : otherMethod === 'transfer' ? 'Bank transfer' : otherMethod === 'cash' ? 'Cash' : 'Other method'} · ${payMode === 'full' ? 'Full payment' : 'Installments (2 payments)'}`)}</p>
