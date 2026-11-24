@@ -330,11 +330,12 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   const [method, setMethod] = useState<'card' | 'other'>('card');
   const [otherMethod, setOtherMethod] = useState<'transfer' | 'cash' | 'other'>('transfer');
   const [error, setError] = useState('');
-  const canAdvance = stateName !== '' && business.trim() !== '' && biz.industry !== '' && (biz.industry !== 'other' || biz.industryOther.trim() !== '') && biz.purpose.trim() !== '' && (mode === 'register' || picked.length > 0);
+  const canAdvance = stateName !== '' && (mode === 'register' || picked.length > 0);
   const servicesTotal = (mode === 'register' ? REGISTRATION_FEE : 0) + picked.reduce((sum, item) => sum + (filingPrices[item] ?? 0), 0);
   const firstPayment = Math.round(servicesTotal * 50) / 100;
   const label = (item: string) => t(filingEs[item] ?? item, item);
   const groupLabel = (group: string) => t(({ 'Company Formation': 'Formación y Documentos', 'Renewals': 'Renovaciones Anuales', 'Business Management': 'Gestión y Cambios' } as Record<string, string>)[group] ?? group, group);
+  const industryLabel = (id: string) => { const found = industries.find(i => i.id === id); return found ? t(found.es, found.en) : '—'; };
   const toggle = (item: string) => setPicked(p => (p.includes(item) ? p.filter(x => x !== item) : [...p, item]));
   const entities = [
     { plan: 'LLC', title: 'LLC', text: t('Protección de activos personales y gestión flexible.', 'Personal asset protection and flexible management.') },
@@ -343,7 +344,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   ];
   const zipValid = (zip: string) => /^\d{5}(-\d{4})?$/.test(zip);
   const advanceToDetails = () => {
-    if (!canAdvance) { setError(t('Completa el Estado, el nombre, el rubro y el propósito del negocio; si gestionas tu negocio, elige al menos un trámite.', 'Complete the state, business name, industry, and business purpose; if managing your company, select at least one filing.')); return; }
+    if (!canAdvance) { setError(t('Completa el Estado; si gestionas tu negocio, elige al menos un trámite.', 'Complete the state; if managing your company, select at least one filing.')); return; }
     setError(''); setStep(2); window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const submit = (e: FormEvent) => {
@@ -379,13 +380,8 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       {mode === 'register' && <fieldset className="portal-block"><legend>{t('Entidad', 'Entity')}</legend>
         <div className="radio-cards">{entities.map(e => <button key={e.plan} type="button" role="radio" aria-checked={entity === e.plan} data-active={entity === e.plan} onClick={() => setEntity(e.plan)}><Building2 size={18} /><span><strong>{e.title}</strong><small>{e.text}</small></span><span className="entity-option-price">{money(REGISTRATION_FEE)}</span></button>)}</div>
       </fieldset>}
-      <fieldset className="portal-block"><legend>{t('Estado y negocio', 'State and business')}</legend>
-        <label>{t('Estado de registro', 'Registration state')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
-        <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
-        <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>
-        <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<select required value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })}><option value="" disabled>{t('Selecciona tu rubro', 'Select your industry')}</option>{industries.map(o => <option key={o.id} value={o.id}>{t(o.es, o.en)}</option>)}</select></label>
-        {biz.industry === 'other' && <label>{t('Especifica tu rubro', 'Specify your industry')}<input required value={biz.industryOther} onChange={e => setBiz({ ...biz, industryOther: e.target.value })} placeholder={t('Ej. Agricultura, ganadería, imprenta…', 'E.g. farming, livestock, printing…')} /></label>}
-        <label>{t('Propósito del negocio', 'Business purpose')}<textarea required rows={3} value={biz.purpose} onChange={e => setBiz({ ...biz, purpose: e.target.value })} placeholder={t('Ej. Venta de comida preparada y servicio de catering.', 'E.g. Prepared food sales and catering services.')} /></label>
+      <fieldset className="portal-block"><legend>{t('Estado de registro', 'Registration state')}</legend>
+        <label>{t('Estado', 'State')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
       </fieldset>
       {mode === 'register' ? <div className="filing-section">
         <button type="button" className="filing-toggle" aria-expanded={showFilings} aria-controls="filing-picker" onClick={() => setShowFilings(v => !v)}>
@@ -411,6 +407,14 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <label>{t('Nombre completo', 'Full name')}<input required value={contact.name} onChange={e => setContact({ ...contact, name: e.target.value })} autoComplete="name" /></label>
         <label>{t('Correo electrónico', 'Email')}<input required type="email" value={contact.email} onChange={e => setContact({ ...contact, email: e.target.value })} autoComplete="email" /></label>
         <label>{t('Teléfono', 'Phone')}<div className="phone-field"><span>🇺🇸 +1</span><input required type="tel" inputMode="tel" maxLength={14} value={contact.phone} onChange={e => { const d = e.target.value.replace(/\D/g, '').slice(0, 10); setContact({ ...contact, phone: d.length > 6 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : d.length > 3 ? `(${d.slice(0, 3)}) ${d.slice(3)}` : d }); }} autoComplete="tel-national" placeholder="(555) 123-4567" /></div><small className="field-note">{t('Exactamente 10 dígitos.', 'Exactly 10 digits.')}</small></label>
+        <label>{t('Nombre del titular o miembro principal', 'Owner or main member name')}<input required value={biz.owner} onChange={e => setBiz({ ...biz, owner: e.target.value })} autoComplete="name" /></label>
+      </fieldset>
+      <fieldset className="portal-block"><legend>{t('Datos de tu negocio', 'Your business details')}</legend>
+        <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
+        <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>
+        <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<select required value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })}><option value="" disabled>{t('Selecciona tu rubro', 'Select your industry')}</option>{industries.map(o => <option key={o.id} value={o.id}>{t(o.es, o.en)}</option>)}</select></label>
+        {biz.industry === 'other' && <label>{t('Especifica tu rubro', 'Specify your industry')}<input required value={biz.industryOther} onChange={e => setBiz({ ...biz, industryOther: e.target.value })} placeholder={t('Ej. Agricultura, ganadería, imprenta…', 'E.g. farming, livestock, printing…')} /></label>}
+        <label>{t('Propósito del negocio', 'Business purpose')}<textarea required rows={3} value={biz.purpose} onChange={e => setBiz({ ...biz, purpose: e.target.value })} placeholder={t('Ej. Venta de comida preparada y servicio de catering.', 'E.g. Prepared food sales and catering services.')} /></label>
       </fieldset>
       {mode === 'register' && <>
       <fieldset className="portal-block"><legend>{t('Dirección del negocio', 'Business address')}</legend>
@@ -429,9 +433,6 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
             <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={mailing.zip} onChange={e => setMailing({ ...mailing, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
           </div>
         </>}
-      </fieldset>
-      <fieldset className="portal-block"><legend>{t('Titular', 'Owner')}</legend>
-        <label>{t('Nombre del titular o miembro principal', 'Owner or main member name')}<input required value={biz.owner} onChange={e => setBiz({ ...biz, owner: e.target.value })} autoComplete="name" /></label>
       </fieldset>
       </>}
       </>}
@@ -470,7 +471,6 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       </div>}
       <div className="pay-total"><span>{t('Total de servicios', 'Services total')}</span><strong>{money(servicesTotal)}</strong></div>
       <Button variant="brand" type="submit" className="h-12 w-full">{method === 'card' ? t('Pagar ahora', 'Pay now') : t('Confirmar solicitud', 'Confirm request')}<ArrowRight /></Button>
-      <p className="portal-note">{t('Tarifa base de servicio desde $349. Las tasas estatales aplican por separado según el Estado y tipo de compañía.', 'Base service fee starting at $349. State filing fees apply separately depending on the state and entity type.')}</p>
       <p className="portal-note">{t('Pago cifrado. Al confirmar se procesa el cobro de tu solicitud.', 'Encrypted payment. Confirming processes the charge for your request.')}</p>
       <p className="portal-note">{t('Modo demostración: todavía no se realiza ningún cargo real.', 'Demo mode: no real charge is made yet.')}</p>
       </>}
@@ -479,6 +479,19 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <h2 className="onboarding-title">{t('¡Gracias!', 'Thank you!')}</h2>
         <p className="portal-note">{t(`Registramos tu solicitud con los datos que enviaste. Un asesor dará seguimiento por correo a ${contact.email}.`, `We registered your request with the details you submitted. An advisor will follow up by email at ${contact.email}.`)}</p>
         <p className="portal-notice">{t('Si se requieren datos adicionales para sus documentos, nos comunicaremos con usted al número proporcionado.', 'If additional information is required for your documents, we will contact you at the phone number provided.')}</p>
+        <dl className="summary">
+          <div><dt>{t('Cliente', 'Client')}</dt><dd>{contact.name}</dd></div>
+          <div><dt>{t('Titular o miembro principal', 'Owner or main member')}</dt><dd>{biz.owner}</dd></div>
+          <div><dt>{t('Correo', 'Email')}</dt><dd>{contact.email}</dd></div>
+          <div><dt>{t('Teléfono', 'Phone')}</dt><dd>{contact.phone}</dd></div>
+          <div><dt>{t('Negocio', 'Business')}</dt><dd>{business}</dd></div>
+          {biz.altName && <div><dt>{t('Nombre alternativo', 'Alternative name')}</dt><dd>{biz.altName}</dd></div>}
+          <div><dt>{t('Rubro', 'Industry')}</dt><dd>{industryLabel(biz.industry)}{biz.industry === 'other' && biz.industryOther ? ` · ${biz.industryOther}` : ''}</dd></div>
+          <div><dt>{t('Propósito', 'Purpose')}</dt><dd>{biz.purpose}</dd></div>
+          <div><dt>{t('Estado de registro', 'Registration state')}</dt><dd>{stateName}</dd></div>
+          {mode === 'register' && biz.street && <div><dt>{t('Dirección del negocio', 'Business address')}</dt><dd>{biz.street}, {biz.city}, {biz.state} {biz.zip}</dd></div>}
+          <div><dt>{t('Total estimado', 'Estimated total')}</dt><dd>{money(servicesTotal)}</dd></div>
+        </dl>
         <p className="portal-note">{t(`Pago: ${method === 'card' ? 'Tarjeta' : otherMethod === 'transfer' ? 'Transferencia bancaria' : otherMethod === 'cash' ? 'Efectivo' : 'Otro método'} · ${payMode === 'full' ? 'Pago completo' : 'Cuotas (2 pagos)'}`, `Payment: ${method === 'card' ? 'Card' : otherMethod === 'transfer' ? 'Bank transfer' : otherMethod === 'cash' ? 'Cash' : 'Other method'} · ${payMode === 'full' ? 'Full payment' : 'Installments (2 payments)'}`)}</p>
         <p className="portal-note">{t('Modo demostración: no se realizó ningún cargo.', 'Demo mode: no charge was made.')}</p>
       </div>}
