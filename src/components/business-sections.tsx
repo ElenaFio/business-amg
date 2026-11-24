@@ -238,7 +238,7 @@ export function TestimonialsSection() {
   </div></section>;
 }
 
-export const usStates = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+export const usStates = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','Washington D.C.','West Virginia','Wisconsin','Wyoming'];
 
 const filingCatalog = [
   { title: 'Company Formation', items: ['Articles of Organization', 'Articles of Incorporation', 'Initial Report', 'EIN Number', 'New Entity', 'Corporate Book', 'Operating Agreement'] },
@@ -309,15 +309,15 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
   const [business, setBusiness] = useState(initialBusiness);
   const [picked, setPicked] = useState<string[]>(initialItem ? [initialItem] : []);
   const [contact, setContact] = useState({ name: '', email: '', phone: '' });
-  const [biz, setBiz] = useState({ street: '', city: '', zip: '', owner: '', activity: '' });
-  const [mailing, setMailing] = useState({ street: '', city: '', zip: '' });
+  const [biz, setBiz] = useState({ street: '', city: '', state: '', zip: '', owner: '', altName: '', industry: '', purpose: '' });
+  const [mailing, setMailing] = useState({ street: '', city: '', state: '', zip: '' });
   const [sameMailing, setSameMailing] = useState(true);
   const [card, setCard] = useState({ name: '', number: '', exp: '', cvc: '' });
   const [payMode, setPayMode] = useState<'full' | 'partial'>('full');
   const [method, setMethod] = useState<'card' | 'other'>('card');
   const [otherMethod, setOtherMethod] = useState<'transfer' | 'cash' | 'other'>('transfer');
   const [error, setError] = useState('');
-  const canAdvance = stateName !== '' && business.trim() !== '' && (mode === 'register' || picked.length > 0);
+  const canAdvance = stateName !== '' && business.trim() !== '' && biz.industry.trim() !== '' && biz.purpose.trim() !== '' && (mode === 'register' || picked.length > 0);
   const servicesTotal = (mode === 'register' ? REGISTRATION_FEE : 0) + picked.reduce((sum, item) => sum + (filingPrices[item] ?? 0), 0);
   const firstPayment = Math.round(servicesTotal * 50) / 100;
   const label = (item: string) => t(filingEs[item] ?? item, item);
@@ -328,9 +328,20 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
     { plan: 'INC', title: 'INC', text: t('Estructura corporativa formal para escalar y emitir acciones.', 'A formal corporate structure to scale and issue shares.') },
     { plan: 'Non-Profit', title: t('Sin Fines de Lucro', 'Non-Profit'), text: t('Entidad para organizaciones benéficas o comunitarias.', 'An entity for charitable or community organizations.') },
   ];
+  const zipValid = (zip: string) => /^\d{5}(-\d{4})?$/.test(zip);
+  const advanceToDetails = () => {
+    if (!canAdvance) { setError(t('Completa el Estado, el nombre, el rubro y el propósito del negocio; si gestionas tu negocio, elige al menos un trámite.', 'Complete the state, business name, industry, and business purpose; if managing your company, select at least one filing.')); return; }
+    setError(''); setStep(2); window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    if (step === 2) { setStep(3); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (step === 1) { advanceToDetails(); return; }
+    if (step === 2) {
+      if (contact.phone.replace(/\D/g, '').length !== 10) { setError(t('El teléfono debe tener exactamente 10 dígitos. Ejemplo: (555) 123-4567.', 'Phone must have exactly 10 digits. Example: (555) 123-4567.')); return; }
+      if (!zipValid(biz.zip)) { setError(t('El código postal debe tener 5 dígitos (ej. 12345) o formato 5+4 (ej. 12345-6789).', 'ZIP code must be 5 digits (e.g. 12345) or 5+4 format (e.g. 12345-6789).')); return; }
+      if (!sameMailing && !zipValid(mailing.zip)) { setError(t('El código postal de correspondencia debe tener 5 dígitos (ej. 12345) o formato 5+4 (ej. 12345-6789).', 'Mailing ZIP code must be 5 digits (e.g. 12345) or 5+4 format (e.g. 12345-6789).')); return; }
+      setError(''); setStep(3); window.scrollTo({ top: 0, behavior: 'smooth' }); return;
+    }
     const digits = card.number.replace(/\D/g, '');
     if (method === 'card' && (digits.length < 15 || !/^\d{2}\/\d{2}$/.test(card.exp) || card.cvc.replace(/\D/g, '').length < 3)) {
       setError(t('Revisa los datos de tu tarjeta.', 'Check your card details.')); return;
@@ -358,6 +369,9 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       <fieldset className="portal-block"><legend>{t('Estado y negocio', 'State and business')}</legend>
         <label>{t('Estado de registro', 'Registration state')}<select required value={stateName} onChange={e => setStateName(e.target.value)}><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
         <label>{t('Nombre de tu negocio', 'Business name')}<input required value={business} onChange={e => setBusiness(e.target.value)} /><small className="field-note">{t('La disponibilidad y aprobación del nombre dependen de la normativa del Estado y de si ya existe uno igual o similar. No reservamos el nombre automáticamente.', 'Name availability and approval depend on state rules and on whether a same or similar name already exists. We do not reserve the name automatically.')}</small></label>
+        <label>{t('Nombre alternativo de tu negocio (opcional)', 'Alternative business name (optional)')}<input value={biz.altName} onChange={e => setBiz({ ...biz, altName: e.target.value })} /><small className="field-note">{t('Un segundo nombre aumenta la probabilidad de disponibilidad al registrar.', 'A second name increases the chance of availability at registration.')}</small></label>
+        <label>{t('Tipo de negocio (rubro)', 'Business type (industry)')}<input required list="industry-options" value={biz.industry} onChange={e => setBiz({ ...biz, industry: e.target.value })} placeholder={t('Restaurante, construcción, transporte…', 'Restaurant, construction, transportation…')} /><datalist id="industry-options">{(['Restaurante','Construcción','Comercio minorista','Servicios profesionales','Transporte','Salud','Belleza','Tecnología','Bienes raíces','Educación','Otro'] as const).map(o => <option key={o} value={t(o, ({ 'Restaurante': 'Restaurant', 'Construcción': 'Construction', 'Comercio minorista': 'Retail', 'Servicios profesionales': 'Professional services', 'Transporte': 'Transportation', 'Salud': 'Healthcare', 'Belleza': 'Beauty', 'Tecnología': 'Technology', 'Bienes raíces': 'Real estate', 'Educación': 'Education', 'Otro': 'Other' } as Record<string, string>)[o] ?? o)} />)}</datalist></label>
+        <label>{t('Propósito del negocio', 'Business purpose')}<textarea required rows={3} value={biz.purpose} onChange={e => setBiz({ ...biz, purpose: e.target.value })} placeholder={t('Ej. Venta de comida preparada y servicio de catering.', 'E.g. Prepared food sales and catering services.')} /></label>
       </fieldset>
       {mode === 'register' ? <div className="filing-section">
         <button type="button" className="filing-toggle" aria-expanded={showFilings} aria-controls="filing-picker" onClick={() => setShowFilings(v => !v)}>
@@ -382,27 +396,28 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
       <fieldset className="portal-block"><legend>{t('Tus datos', 'Your details')}</legend>
         <label>{t('Nombre completo', 'Full name')}<input required value={contact.name} onChange={e => setContact({ ...contact, name: e.target.value })} autoComplete="name" /></label>
         <label>{t('Correo electrónico', 'Email')}<input required type="email" value={contact.email} onChange={e => setContact({ ...contact, email: e.target.value })} autoComplete="email" /></label>
-        <label>{t('Teléfono', 'Phone')}<div className="phone-field"><span>🇺🇸 +1</span><input required type="tel" inputMode="tel" value={contact.phone} onChange={e => setContact({ ...contact, phone: e.target.value })} autoComplete="tel-national" placeholder="(555) 123-4567" /></div></label>
+        <label>{t('Teléfono', 'Phone')}<div className="phone-field"><span>🇺🇸 +1</span><input required type="tel" inputMode="tel" maxLength={14} value={contact.phone} onChange={e => { const d = e.target.value.replace(/\D/g, '').slice(0, 10); setContact({ ...contact, phone: d.length > 6 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : d.length > 3 ? `(${d.slice(0, 3)}) ${d.slice(3)}` : d }); }} autoComplete="tel-national" placeholder="(555) 123-4567" /></div><small className="field-note">{t('Exactamente 10 dígitos.', 'Exactly 10 digits.')}</small></label>
       </fieldset>
       {mode === 'register' && <>
       <fieldset className="portal-block"><legend>{t('Dirección del negocio', 'Business address')}</legend>
         <label>{t('Dirección principal (calle y número)', 'Primary address (street and number)')}<input required value={biz.street} onChange={e => setBiz({ ...biz, street: e.target.value })} autoComplete="address-line1" placeholder="123 Main St, Suite 4" /></label>
+        <label>{t('Ciudad', 'City')}<input required value={biz.city} onChange={e => setBiz({ ...biz, city: e.target.value })} autoComplete="address-level2" /></label>
         <div className="card-row">
-          <label>{t('Ciudad', 'City')}<input required value={biz.city} onChange={e => setBiz({ ...biz, city: e.target.value })} autoComplete="address-level2" /></label>
-          <label>{t('Estado / Código postal', 'State / ZIP')}<input required value={biz.zip} onChange={e => setBiz({ ...biz, zip: e.target.value })} autoComplete="address-level1" placeholder="CA 90015" /></label>
+          <label>{t('Estado', 'State')}<select required value={biz.state} onChange={e => setBiz({ ...biz, state: e.target.value })} autoComplete="address-level1"><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
+          <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={biz.zip} onChange={e => setBiz({ ...biz, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
         </div>
         <label className="check-line"><input type="checkbox" checked={sameMailing} onChange={e => setSameMailing(e.target.checked)} /><span>{t('Usar la misma dirección para correspondencia', 'Use the same address for mailing')}</span></label>
         {!sameMailing && <>
           <label>{t('Dirección de correspondencia', 'Mailing address')}<input required value={mailing.street} onChange={e => setMailing({ ...mailing, street: e.target.value })} autoComplete="address-line1" /></label>
+          <label>{t('Ciudad', 'City')}<input required value={mailing.city} onChange={e => setMailing({ ...mailing, city: e.target.value })} autoComplete="address-level2" /></label>
           <div className="card-row">
-            <label>{t('Ciudad', 'City')}<input required value={mailing.city} onChange={e => setMailing({ ...mailing, city: e.target.value })} autoComplete="address-level2" /></label>
-            <label>{t('Estado / Código postal', 'State / ZIP')}<input required value={mailing.zip} onChange={e => setMailing({ ...mailing, zip: e.target.value })} autoComplete="address-level1" /></label>
+            <label>{t('Estado', 'State')}<select required value={mailing.state} onChange={e => setMailing({ ...mailing, state: e.target.value })} autoComplete="address-level1"><option value="" disabled>{t('Selecciona tu Estado', 'Select your state')}</option>{usStates.map(s => <option key={s}>{s}</option>)}</select></label>
+            <label>{t('Código Postal', 'ZIP code')}<input required inputMode="numeric" value={mailing.zip} onChange={e => setMailing({ ...mailing, zip: e.target.value.replace(/[^\d-]/g, '').slice(0, 10) })} autoComplete="postal-code" placeholder="12345 o 12345-6789" /></label>
           </div>
         </>}
       </fieldset>
-      <fieldset className="portal-block"><legend>{t('Titular y actividad', 'Owner and activity')}</legend>
+      <fieldset className="portal-block"><legend>{t('Titular', 'Owner')}</legend>
         <label>{t('Nombre del titular o miembro principal', 'Owner or main member name')}<input required value={biz.owner} onChange={e => setBiz({ ...biz, owner: e.target.value })} autoComplete="name" /></label>
-        <label>{t('Giro o actividad del negocio', 'Business activity')}<input required value={biz.activity} onChange={e => setBiz({ ...biz, activity: e.target.value })} placeholder={t('Restaurante, consultoría, tienda en línea…', 'Restaurant, consulting, online store…')} /></label>
       </fieldset>
       </>}
       </>}
@@ -449,6 +464,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <span className="portal-check" aria-hidden="true"><Check size={22} /></span>
         <h2 className="onboarding-title">{t('¡Gracias!', 'Thank you!')}</h2>
         <p className="portal-note">{t(`Registramos tu solicitud con los datos que enviaste. Un asesor dará seguimiento por correo a ${contact.email}.`, `We registered your request with the details you submitted. An advisor will follow up by email at ${contact.email}.`)}</p>
+        <p className="portal-notice">{t('Si se requieren datos adicionales para sus documentos, nos comunicaremos con usted al número proporcionado.', 'If additional information is required for your documents, we will contact you at the phone number provided.')}</p>
         <p className="portal-note">{t(`Pago: ${method === 'card' ? 'Tarjeta' : otherMethod === 'transfer' ? 'Transferencia bancaria' : otherMethod === 'cash' ? 'Efectivo' : 'Otro método'} · ${payMode === 'full' ? 'Pago completo' : 'Cuotas (2 pagos)'}`, `Payment: ${method === 'card' ? 'Card' : otherMethod === 'transfer' ? 'Bank transfer' : otherMethod === 'cash' ? 'Cash' : 'Other method'} · ${payMode === 'full' ? 'Full payment' : 'Installments (2 payments)'}`)}</p>
         <p className="portal-note">{t('Modo demostración: no se realizó ningún cargo.', 'Demo mode: no charge was made.')}</p>
       </div>}
@@ -476,10 +492,7 @@ export function OnboardingForm({ plan, initialBusiness, initialItem }: { plan: s
         <div><dt>{t('Servicios (estimado)', 'Services (estimate)')}</dt><dd>{money(servicesTotal)}</dd></div>
       </dl>
       <p className="portal-note">{t('Tarifa base de servicio desde $349. Las tasas estatales aplican por separado según el Estado y tipo de compañía.', 'Base service fee starting at $349. State filing fees apply separately depending on the state and entity type.')}</p>
-      {step <= 2 && <Button variant="brand" type={step === 1 ? 'button' : 'submit'} className="h-12 w-full" onClick={step === 1 ? () => {
-        if (!canAdvance) { setError(t('Completa el Estado y el nombre del negocio; si gestionas tu negocio, elige al menos un trámite.', 'Complete the state and business name; if managing your company, select at least one filing.')); return; }
-        setError(''); setStep(2); window.scrollTo({ top: 0, behavior: 'smooth' });
-      } : undefined}>{step === 1 ? t('Continuar con mis datos', 'Continue with my details') : t('Ir al pago', 'Go to payment')}<ArrowRight /></Button>}
+      {step <= 2 && <Button variant="brand" type={step === 1 ? 'button' : 'submit'} className="h-12 w-full" onClick={step === 1 ? advanceToDetails : undefined}>{step === 1 ? t('Continuar con mis datos', 'Continue with my details') : t('Ir al pago', 'Go to payment')}<ArrowRight /></Button>}
       {step <= 2 && <p className="portal-note">{step === 1 ? t('Completa tus datos en el siguiente paso antes de ir al pago.', 'Complete your details in the next step before going to payment.') : t('Avanzarás a la pasarela de pago segura.', 'You will move on to the secure payment gateway.')}</p>}
     </aside>
   </form>;

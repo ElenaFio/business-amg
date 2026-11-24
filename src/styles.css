@@ -289,7 +289,8 @@
 .portal-block legend { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted-foreground); margin-bottom: 10px; }
 .portal-block label { font-size: 13px; font-weight: 600; display: grid; gap: 7px; }
 .field-note { font-size: 11.5px; line-height: 1.5; font-weight: 500; color: var(--muted-foreground); }
-.portal-block input:not([type=checkbox]), .portal-block select { border: 1px solid var(--border); background: var(--background); border-radius: 12px; padding: 12px 13px; font-size: 15px; width: 100%; }
+.portal-block input:not([type=checkbox]), .portal-block select, .portal-block textarea { border: 1px solid var(--border); background: var(--background); border-radius: 12px; padding: 12px 13px; font-size: 15px; width: 100%; }
+.portal-block textarea { resize: vertical; min-height: 84px; font-family: inherit; }
 .segmented { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .segmented button { padding: 12px 14px; border: 2px solid var(--border); border-radius: 12px; background: var(--background); font-size: 13px; font-weight: 700; }
 .segmented button[data-active=true] { border-color: var(--primary); background: var(--accent); }
@@ -331,6 +332,7 @@
 .picked-remove:hover { background: var(--muted); color: var(--foreground); }
 .picked-remove svg { width: 13px; height: 13px; }
 .portal-note { font-size: 11px; line-height: 1.6; color: var(--muted-foreground); }
+.portal-notice { font-size: 12.5px; line-height: 1.6; font-weight: 600; color: var(--foreground); background: var(--secondary); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
 .portal-error { font-size: 13px; font-weight: 600; color: oklch(.55 .19 27); }
 .portal-back { display: inline-flex; align-items: center; gap: 6px; align-self: start; font-size: 13px; font-weight: 600; color: var(--muted-foreground); transition: color .18s ease; }
 .portal-back:hover { color: var(--foreground); }
