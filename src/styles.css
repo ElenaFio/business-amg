@@ -281,9 +281,9 @@
 .review-author small { font-size: 11px; letter-spacing: .04em; color: var(--muted-foreground); }
 @media (max-width: 1024px) { .review-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 700px) {
-  .review-grid { display: flex; overflow-x: auto; gap: 16px; padding-bottom: 8px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .review-grid { display: flex; overflow-x: auto; gap: 16px; padding-bottom: 8px; margin-right: -20px; padding-right: 24px; scroll-snap-type: x mandatory; scroll-padding-left: 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .review-grid::-webkit-scrollbar { display: none; }
-  .review-card { flex: 0 0 85vw; max-width: 24rem; scroll-snap-align: center; }
+  .review-card { flex: 0 0 82vw; max-width: 320px; scroll-snap-align: start; }
 }
 .onboarding-page { min-height: 100vh; background: var(--background); padding: 40px 20px 80px; }
 .onboarding-wrap { max-width: 1080px; margin: 0 auto; }
